@@ -1,0 +1,44 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/duck"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/duck_female"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/duck_campbell"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/duck_pekin"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/goose"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/canadian_goose"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/greylag_goose"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/ping_goose"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/sus_goose"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "untitledduckmod:entity/untitled_goose"
+    }
+  ]
+}

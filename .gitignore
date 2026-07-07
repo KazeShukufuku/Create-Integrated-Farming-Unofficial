@@ -1,0 +1,33 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Java build output
+bin/
+*.class
+
+# Minecraft/Forge local run data
+run/
+logs/
+crash-reports/
+saves/
+*.log
+
+# IDE/editor files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local temp/work files
+.codex-tmp/
+.agents/
+*.tmp
+*.temp

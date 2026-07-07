@@ -1,0 +1,201 @@
+plugins {
+    id 'java-library'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.38'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = 'create-integrated-farming'
+}
+
+def cifMixinConfigs = [
+        'create_integrated_farming.mixins.json',
+        'create_integrated_farming.createenchantablemachinery.mixins.json',
+        'create_integrated_farming.delightoflight.mixins.json',
+        'create_integrated_farming.netherdepthsupgrade.mixins.json'
+]
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            cifMixinConfigs.each { args '--mixin.config', it }
+            mods {
+                create_integrated_farming {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            cifMixinConfigs.each { args '--mixin.config', it }
+            args '--nogui'
+            mods {
+                create_integrated_farming {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            cifMixinConfigs.each { args '--mixin.config', it }
+            args '--mod', mod_id, '--all',
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/')
+            mods {
+                create_integrated_farming {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    cifMixinConfigs.each { config it }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.createmod.net' }
+    maven { url = 'https://maven.tterrag.com' }
+    maven { url = 'https://maven.ithundxr.dev/mirror' }
+    maven { url = 'https://mvn.devos.one/snapshots' }
+    maven { url = 'https://maven.fallenbreath.me/releases' }
+    maven { url = 'https://thedarkcolour.github.io/KotlinForForge/' }
+    maven { url = 'https://cursemaven.com' }
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://maven.shedaniel.me' }
+    maven { url = 'https://maven.theillusivec4.top/' }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+processResources {
+    var replaceProperties = [
+            minecraft_version: minecraft_version,
+            forge_version    : forge_version,
+            mod_id           : mod_id,
+            mod_name         : mod_name,
+            mod_license      : mod_license,
+            mod_version      : mod_version,
+            mod_authors      : mod_authors,
+            mod_description  : mod_description
+    ]
+    inputs.properties replaceProperties
+    filesMatching('META-INF/mods.toml') {
+        expand replaceProperties
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    compileOnly fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim")
+    implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
+    implementation fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    compileOnly annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
+        jarJar.ranged(it, "[0.4.1,)")
+    }
+    implementation(jarJar("me.fallenbreath:conditional-mixin-forge:0.6.4")) {
+        jarJar.ranged(it, "[0.6.4,)")
+    }
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    def curse = { String slug, String projectId, String fileId ->
+        "curse.maven:${slug}-${projectId}:${fileId}"
+    }
+    def compatMod = { Object notation ->
+        compileOnly fg.deobf(notation)
+        runtimeOnly fg.deobf(notation)
+    }
+    def runtimeMod = { Object notation ->
+        runtimeOnly fg.deobf(notation)
+    }
+
+    compatMod curse('farmers-delight', '398521', '8083474')
+    compatMod curse('nether-depths-upgrade', '670011', '5340329')
+    compatMod curse('my-nethers-delight', '1003673', '6529919')
+    compatMod curse('create-enchantable-machinery', '1061749', '7766936')
+    compatMod curse('crabbers-delight', '892827', '8006125')
+    compatMod curse('untitled-duck-mod-forge', '451789', '8316204')
+    compatMod curse('delighto-flight', '1347014', '8012633')
+    compatMod curse('twilights-flavors-delight', '871735', '8208651')
+    compatMod curse('the-twilight-forest', '227639', '5468648')
+    compatMod curse('createaddition', '439890', '7208610')
+    compatMod curse('geckolib', '388172', '7553267')
+    compileOnly fg.deobf(curse('jade', '324717', '6855440'))
+    runtimeMod curse('jade', '324717', '6855440')
+    runtimeMod curse('jade-addons', '583345', '6274674')
+    runtimeMod curse('just-enough-characters', '250702', '7411324')
+    runtimeMod "mezz.jei:jei-${minecraft_version}-forge:15.20.0.132"
+    runtimeOnly fg.deobf("thedarkcolour:kotlinforforge:4.11.0")
+
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveClassifier = 'slim'
+    from 'LICENSE.txt'
+    from 'NOTICE.md'
+    from 'THIRD_PARTY_NOTICES.md'
+    from 'MODPACK_README.md'
+    from('licenses') {
+        into 'licenses'
+    }
+    manifest {
+        attributes 'MixinConfigs': cifMixinConfigs.join(',')
+    }
+}
+
+sourcesJar {
+    from 'LICENSE.txt'
+    from 'NOTICE.md'
+    from 'THIRD_PARTY_NOTICES.md'
+    from 'MODPACK_README.md'
+    from('licenses') {
+        into 'licenses'
+    }
+}
+
+tasks.named('jarJar') {
+    archiveClassifier = ''
+    from 'LICENSE.txt'
+    from 'NOTICE.md'
+    from 'THIRD_PARTY_NOTICES.md'
+    from 'MODPACK_README.md'
+    from('licenses') {
+        into 'licenses'
+    }
+}
