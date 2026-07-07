@@ -29,5 +29,6 @@ desktop.ini
 # Local temp/work files
 .codex-tmp/
 .agents/
+.codegraph/
 *.tmp
 *.temp
