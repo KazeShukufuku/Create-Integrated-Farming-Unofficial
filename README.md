@@ -60,6 +60,10 @@ implements the relevant 1.20.1 Harvester compatibility work. This project avoids
 shipping a second implementation of that compatibility layer for Minecraft
 1.20.1.
 
+Mechanical Arm interactions with Farmer's Delight baskets were also not ported,
+because Create: Central Kitchen already includes that integration for Minecraft
+1.20.1.
+
 Integration code that is still needed by this port, such as selected custom
 harvest behaviours for supported add-ons, is kept where it remains useful.
 
