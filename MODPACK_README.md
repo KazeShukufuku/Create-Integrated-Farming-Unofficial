@@ -6,9 +6,8 @@ and third-party notices when redistributing the mod jar or modified versions of
 it.
 
 This Minecraft 1.20.1 build is a port derived from the upstream Minecraft
-1.21.1 Create: Integrated Farming project and includes selected helper code from
-Create Dragons Plus. The attribution for those upstream sources is documented
-in `THIRD_PARTY_NOTICES.md`.
+1.21.1 Create: Integrated Farming project and requires the official Create:
+Dragons Plus 1.11.6 release for Minecraft 1.20.1.
 
 This is an unofficial port. Please direct issues with this Minecraft 1.20.1
 port to this project, not to the upstream Create: Integrated Farming project.
