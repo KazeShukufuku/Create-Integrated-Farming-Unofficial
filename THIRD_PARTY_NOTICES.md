@@ -19,18 +19,6 @@ obligations are carried in this distribution.
 * License: GNU Lesser General Public License version 3 or later.
 * License text: `LICENSE.txt`
 
-### Create Dragons Plus
-
-* Project: https://github.com/DragonsPlusMinecraft/CreateDragonsPlus
-* Original authors: DragonsPlus
-* Upstream version referenced by Create: Integrated Farming 1.21.1:
-  `create_dragons_plus_version = 1.11.2`.
-* Use: selected compatibility/helper code is incorporated under
-  `src/main/java/plus/dragons/createdragonsplus/` because this port targets
-  Minecraft 1.20.1 instead of using the upstream 1.21.1 dependency directly.
-* License: GNU Lesser General Public License version 3 or later.
-* License text: `LICENSE.txt`
-
 ## Bundled Libraries
 
 ### MixinExtras

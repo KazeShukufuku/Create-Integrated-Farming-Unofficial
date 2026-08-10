@@ -22,11 +22,10 @@ This Minecraft 1.20.1 port is based on the upstream Create: Integrated Farming
 - **Upstream repository:**
   <https://github.com/DragonsPlusMinecraft/CreateIntegratedFarming>
 
-## Included Helper Code
+## Create Dragons Plus Dependency
 
-Some compatibility and helper code from the upstream Create Dragons Plus
-dependency by DragonsPlus is incorporated into this port to support
-Minecraft 1.20.1.
+This port requires the official Minecraft 1.20.1 Create Dragons Plus release
+by DragonsPlus. Its files are not incorporated into this distribution.
 
 - **Create Dragons Plus repository:**
   <https://github.com/DragonsPlusMinecraft/CreateDragonsPlus>

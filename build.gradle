@@ -105,7 +105,8 @@ processResources {
             mod_license      : mod_license,
             mod_version      : mod_version,
             mod_authors      : mod_authors,
-            mod_description  : mod_description
+            mod_description  : mod_description,
+            create_dragons_plus_version: create_dragons_plus_version
     ]
     inputs.properties replaceProperties
     filesMatching('META-INF/mods.toml') {
@@ -151,6 +152,7 @@ dependencies {
     compatMod curse('the-twilight-forest', '227639', '5468648')
     compatMod curse('createaddition', '439890', '7208610')
     compatMod curse('geckolib', '388172', '7553267')
+    implementation fg.deobf(curse('create-dragons-plus', '1216624', create_dragons_plus_file_id))
     compileOnly fg.deobf(curse('jade', '324717', '6855440'))
     runtimeMod curse('jade', '324717', '6855440')
     runtimeMod curse('jade-addons', '583345', '6274674')

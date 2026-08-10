@@ -42,3 +42,10 @@ mandatory=true
 versionRange="[6.0.8,)"
 ordering="AFTER"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="create_dragons_plus"
+mandatory=true
+versionRange="[${create_dragons_plus_version},1.12)"
+ordering="AFTER"
+side="BOTH"

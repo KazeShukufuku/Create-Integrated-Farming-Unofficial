@@ -74,6 +74,7 @@ Required:
 * Minecraft 1.20.1
 * Minecraft Forge 47.4.10 or newer in the 47.x line
 * Create 6.0.8 or newer
+* Create: Dragons Plus 1.11.6 or newer in the 1.11.x line
 
 Some features require optional integration mods. See `build.gradle` for the
 exact development dependency list used by this repository.
@@ -85,7 +86,7 @@ https://github.com/DragonsPlusMinecraft/CreateIntegratedFarming
 
 Minecraft 1.20.1 port maintained by KazeShukufuku.
 
-Some helper code from Create Dragons Plus is incorporated for this port:
+This port depends on the official Create Dragons Plus release:
 https://github.com/DragonsPlusMinecraft/CreateDragonsPlus
 
 See `NOTICE.md`, `THIRD_PARTY_NOTICES.md`, and `licenses/` for license and
