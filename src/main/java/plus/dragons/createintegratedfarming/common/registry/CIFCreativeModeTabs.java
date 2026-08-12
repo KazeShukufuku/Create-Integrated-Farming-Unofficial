@@ -32,6 +32,7 @@ import net.minecraftforge.registries.RegistryObject;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry.NDUBlocks;
+import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoosts;
 
 public class CIFCreativeModeTabs {
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister
@@ -57,5 +58,10 @@ public class CIFCreativeModeTabs {
             output.accept(NDUBlocks.LAVA_FISHING_NET);
         output.accept(ROOST);
         output.accept(CHICKEN_ROOST);
+        if (ModIntegration.ENVIRONMENTAL.enabled())
+            output.accept(DynamicBirdRoosts.environmentalDuck());
+        if (ModIntegration.AUTUMNITY.enabled())
+            output.accept(DynamicBirdRoosts.autumnityTurkey());
+        output.accept(VACUUM_HARVESTER);
     }
 }

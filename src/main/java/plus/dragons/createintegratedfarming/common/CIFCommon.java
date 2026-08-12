@@ -40,9 +40,11 @@ import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.registry.CrabbersDelightArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.delightoflight.registry.DelightOFlightHarvestBehaviors;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDBlockSpoutingBehaviours;
+import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDHarvestBehaviours;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
 import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry.NDUBlocks;
+import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoosts;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.registry.TwilightDelightArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.registry.TwilightDelightHarvestBehaviours;
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckBlockEntities;
@@ -73,6 +75,10 @@ public class CIFCommon {
         CIFArmInteractionPoints.register(modBus);
         if (ModIntegration.NETHER_DEPTHS_UPGRADE.enabled())
             NDUBlocks.register();
+        if (ModIntegration.ENVIRONMENTAL.enabled())
+            DynamicBirdRoosts.registerEnvironmental(modBus);
+        if (ModIntegration.AUTUMNITY.enabled())
+            DynamicBirdRoosts.registerAutumnity(modBus);
         modBus.register(CIFCommon.class);
         modBus.register(new CIFConfig());
         MinecraftForge.EVENT_BUS.addListener(CIFChickenFoods::addReloadListeners);
@@ -83,18 +89,43 @@ public class CIFCommon {
         event.enqueueWork(CIFBlockSpoutingBehaviours::register);
         if (ModIntegration.FARMERS_DELIGHT.enabled())
             event.enqueueWork(FDBlockSpoutingBehaviours::register);
+        if (ModIntegration.FARMERS_DELIGHT.enabled())
+            event.enqueueWork(FDHarvestBehaviours::register);
         if (ModIntegration.MY_NETHERS_DELIGHT.enabled())
             event.enqueueWork(MNDBlockSpoutingBehaviors::register);
         if (ModIntegration.DELIGHT_O_FLIGHT.enabled())
             event.enqueueWork(DelightOFlightHarvestBehaviors::register);
         if (ModIntegration.TWILIGHT_DELIGHT.enabled())
             event.enqueueWork(TwilightDelightHarvestBehaviours::register);
+        if (ModIntegration.CULTURAL_DELIGHTS.enabled())
+            event.enqueueWork(CIFCommon::registerCulturalDelightsHarvests);
+        if (ModIntegration.HEARTH_AND_HARVEST.enabled()
+                || ModIntegration.WINDSWEPT.enabled()
+                || ModIntegration.FESTIVE_DELIGHT.enabled()
+                || ModIntegration.NETHERS_EXOTICISM.enabled()
+                || ModIntegration.CORN_DELIGHT.enabled())
+            event.enqueueWork(plus.dragons.createintegratedfarming.integration.RegistryHarvestBehaviours::register);
         event.enqueueWork(CIFRoostCapturables::register);
         if (ModIntegration.UNTITLED_DUCK.enabled())
             event.enqueueWork(UntitledDuckCapturables::register);
+        if (ModIntegration.ENVIRONMENTAL.enabled())
+            event.enqueueWork(DynamicBirdRoosts::registerEnvironmentalCapturable);
+        if (ModIntegration.AUTUMNITY.enabled())
+            event.enqueueWork(DynamicBirdRoosts::registerAutumnityCapturable);
     }
 
     public static ResourceLocation asResource(String path) {
         return new ResourceLocation(ID, path);
     }
+
+    private static void registerCulturalDelightsHarvests() {
+        try {
+            Class.forName("plus.dragons.createintegratedfarming.integration.culturaldelights.CulturalDelightsIntegration")
+                    .getMethod("register")
+                    .invoke(null);
+        } catch (ReflectiveOperationException exception) {
+            LOGGER.error("Failed to register Cultural Delights harvesting compatibility", exception);
+        }
+    }
+
 }

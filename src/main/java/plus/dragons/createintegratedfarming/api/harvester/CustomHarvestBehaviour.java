@@ -66,6 +66,25 @@ public interface CustomHarvestBehaviour {
     void harvest(HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state);
 
     /**
+     * Whether this behaviour should take over Create's contraption-mounted
+     * mechanical harvester. Area harvesters use {@link #harvestInArea} and are
+     * deliberately unaffected by this opt-out.
+     */
+    default boolean handlesMechanicalHarvester() {
+        return true;
+    }
+
+    /**
+     * Harvest through an area harvester. Structured crops must opt in explicitly,
+     * because a generic fallback could damage their neighbouring blocks.
+     *
+     * @return whether a block was harvested
+     */
+    default boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        return false;
+    }
+
+    /**
      * Shortcut for {@code harvesterReplants} config.
      */
     static boolean replant() {

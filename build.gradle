@@ -152,6 +152,20 @@ dependencies {
     compatMod curse('the-twilight-forest', '227639', '5468648')
     compatMod curse('createaddition', '439890', '7208610')
     compatMod curse('geckolib', '388172', '7553267')
+    compatMod curse('cultural-delights', '574622', '8126187')
+
+    // Optional integrations added for the 1.20.1 port. Keep them on the
+    // development runtime so runClient can exercise every compatibility path.
+    runtimeMod curse('mysterious-mountain-lib', '368098', '7636232')
+    runtimeMod curse('corn-delight', '577805', '8219677')
+    runtimeMod curse('create-central-kitchen', '820977', '8204836')
+    runtimeMod curse('blueprint', '382216', '8048579')
+    runtimeMod curse('environmental', '388992', '7065177')
+    runtimeMod curse('autumnity', '365045', '6151402')
+    runtimeMod curse('hearth-and-harvest', '1212197', '8416048')
+    runtimeMod curse('windsweptmod', '636321', '7515974')
+    runtimeMod curse('festive-delight', '711672', '7884694')
+    runtimeMod curse('nethers-exoticism', '486029', '5825956')
     implementation fg.deobf(curse('create-dragons-plus', '1216624', create_dragons_plus_file_id))
     compileOnly fg.deobf(curse('jade', '324717', '6855440'))
     runtimeMod curse('jade', '324717', '6855440')

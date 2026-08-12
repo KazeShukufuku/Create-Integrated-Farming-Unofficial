@@ -38,6 +38,7 @@ public enum RoostNextEggProvider implements IBlockComponentProvider, IServerData
     public static final ResourceLocation UID = CIFCommon.asResource("roost_next_egg");
     private static final String NEXT_EGG_IN = "NextEggIn";
     private static final String FEED_COOLDOWN = "FeedCooldown";
+    private static final String OUTPUT_BLOCKED = "OutputBlocked";
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
@@ -52,16 +53,24 @@ public enum RoostNextEggProvider implements IBlockComponentProvider, IServerData
                     "create_integrated_farming.jade.feed_cooldown",
                     IThemeHelper.get().seconds(serverData.getInt(FEED_COOLDOWN))));
         }
+        if (serverData.getBoolean(OUTPUT_BLOCKED))
+            tooltip.add(Component.translatable("create_integrated_farming.jade.output_blocked"));
     }
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         BlockEntity blockEntity = accessor.getBlockEntity();
         if (blockEntity instanceof AnimalRoostBlockEntity roost) {
-            tag.putInt(NEXT_EGG_IN, roost.getEggTime());
+            tag.putInt(NEXT_EGG_IN, roundUpToSecond(roost.getEggTime()));
             if (roost.getFeedCooldown() > 0)
-                tag.putInt(FEED_COOLDOWN, roost.getFeedCooldown());
+                tag.putInt(FEED_COOLDOWN, roundUpToSecond(roost.getFeedCooldown()));
+            tag.putBoolean(OUTPUT_BLOCKED, roost.isOutputInventoryBlocked());
         }
+    }
+
+    /** Jade truncates its tick-based duration formatter, while Create goggles round up. */
+    private static int roundUpToSecond(int ticks) {
+        return ((ticks + 19) / 20) * 20;
     }
 
     @Override

@@ -32,6 +32,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetBlock;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMovementBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterBlock;
+import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterMovementBehaviour;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlock;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlockItem;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlock;
@@ -64,6 +66,14 @@ public class CIFBlocks {
             .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), AssetLookup.standardModel(ctx, prov)))
             .item()
             .build()
+            .register();
+    public static final BlockEntry<VacuumHarvesterBlock> VACUUM_HARVESTER = REGISTRATE
+            .block("vacuum_harvester", VacuumHarvesterBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(properties -> properties.noOcclusion().mapColor(DyeColor.YELLOW))
+            .blockstate((ctx, provider) -> provider.simpleBlock(ctx.get(), AssetLookup.standardModel(ctx, provider)))
+            .onRegister(block -> MovementBehaviour.REGISTRY.register(block, new VacuumHarvesterMovementBehaviour()))
+            .simpleItem()
             .register();
 
     public static void register(IEventBus modBus) {}
