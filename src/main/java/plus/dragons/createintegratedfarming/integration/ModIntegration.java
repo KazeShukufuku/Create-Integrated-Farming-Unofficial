@@ -34,7 +34,16 @@ public enum ModIntegration {
     DELIGHT_O_FLIGHT(Mods.DELIGHT_O_FLIGHT),
     SABLE(Mods.SABLE),
     TWILIGHT_FOREST(Mods.TWILIGHT_FOREST),
-    TWILIGHT_DELIGHT(Mods.TWILIGHT_DELIGHT);
+    TWILIGHT_DELIGHT(Mods.TWILIGHT_DELIGHT),
+    CORN_DELIGHT(Mods.CORN_DELIGHT),
+    CREATE_CENTRAL_KITCHEN(Mods.CREATE_CENTRAL_KITCHEN),
+    CULTURAL_DELIGHTS(Mods.CULTURAL_DELIGHTS),
+    HEARTH_AND_HARVEST(Mods.HEARTH_AND_HARVEST),
+    WINDSWEPT(Mods.WINDSWEPT),
+    FESTIVE_DELIGHT(Mods.FESTIVE_DELIGHT),
+    NETHERS_EXOTICISM(Mods.NETHERS_EXOTICISM),
+    ENVIRONMENTAL(Mods.ENVIRONMENTAL),
+    AUTUMNITY(Mods.AUTUMNITY);
 
     private final String id;
 
@@ -74,5 +83,14 @@ public enum ModIntegration {
         public static final String SABLE = "sable";
         public static final String TWILIGHT_FOREST = "twilightforest";
         public static final String TWILIGHT_DELIGHT = "twilightdelight";
+        public static final String CORN_DELIGHT = "corn_delight";
+        public static final String CREATE_CENTRAL_KITCHEN = "create_central_kitchen";
+        public static final String CULTURAL_DELIGHTS = "culturaldelights";
+        public static final String HEARTH_AND_HARVEST = "hearthandharvest";
+        public static final String WINDSWEPT = "windswept";
+        public static final String FESTIVE_DELIGHT = "festivedelight";
+        public static final String NETHERS_EXOTICISM = "nethersexoticism";
+        public static final String ENVIRONMENTAL = "environmental";
+        public static final String AUTUMNITY = "autumnity";
     }
 }

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,waterlogged=false": { "model": "create_integrated_farming:block/environmental_duck_roost" },
+    "facing=north,waterlogged=true": { "model": "create_integrated_farming:block/environmental_duck_roost" },
+    "facing=east,waterlogged=false": { "model": "create_integrated_farming:block/environmental_duck_roost", "y": 90 },
+    "facing=east,waterlogged=true": { "model": "create_integrated_farming:block/environmental_duck_roost", "y": 90 },
+    "facing=south,waterlogged=false": { "model": "create_integrated_farming:block/environmental_duck_roost", "y": 180 },
+    "facing=south,waterlogged=true": { "model": "create_integrated_farming:block/environmental_duck_roost", "y": 180 },
+    "facing=west,waterlogged=false": { "model": "create_integrated_farming:block/environmental_duck_roost", "y": 270 },
+    "facing=west,waterlogged=true": { "model": "create_integrated_farming:block/environmental_duck_roost", "y": 270 }
+  }
+}

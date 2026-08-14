@@ -39,6 +39,14 @@
     {
       "type": "minecraft:single",
       "resource": "untitledduckmod:entity/untitled_goose"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "environmental:entity/duck/duck"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "autumnity:entity/turkey"
     }
   ]
 }

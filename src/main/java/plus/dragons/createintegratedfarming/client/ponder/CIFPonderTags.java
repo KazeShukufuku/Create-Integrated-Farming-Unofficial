@@ -60,6 +60,7 @@ public class CIFPonderTags {
 
         entryHelper.addToTag(FARMING_APPLIANCES)
                 .add(AllBlocks.MECHANICAL_HARVESTER)
+                .add(CIFBlocks.VACUUM_HARVESTER)
                 .add(AllBlocks.SPOUT);
 
         entryHelper.addToTag(RANCHING_APPLIANCES)

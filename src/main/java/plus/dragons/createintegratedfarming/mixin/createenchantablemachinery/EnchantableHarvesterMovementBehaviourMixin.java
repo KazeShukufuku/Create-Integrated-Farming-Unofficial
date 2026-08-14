@@ -39,6 +39,9 @@ public class EnchantableHarvesterMovementBehaviourMixin extends HarvesterMovemen
     @Inject(method = "visitNewPosition", at = @At(value = "INVOKE", target = "Lio/github/cotrin8672/cem/content/block/harvester/EnchantableHarvesterMovementBehaviour;isValidCrop(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"), cancellable = true, remap = false)
     private void createintegratedfarming$applyCustomHarvesterBehaviour(MovementContext context, BlockPos pos, CallbackInfo ci, @Local BlockState stateVisited) {
         var behaviour = CustomHarvestBehaviour.REGISTRY.get(stateVisited);
+        // Central Kitchen's Corn Delight compatibility only replaces Create's
+        // normal harvester. Keep this path so the enchanted harvester still
+        // supplies its enchantment data to our custom crop behaviour.
         if (behaviour == null)
             return;
         behaviour.harvest(this, context, pos, stateVisited);

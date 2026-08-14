@@ -20,20 +20,26 @@ package plus.dragons.createintegratedfarming.common.ranching.roost;
 
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.item.ItemHandlerWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
+import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.Containers;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,11 +56,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 
-public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
+public abstract class AnimalRoostBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     protected final ItemStackHandler inventory;
     public final IItemHandler outputHandler;
     protected int feedCooldown;
     protected int eggTime = productionCooldown();
+    /** True when a ready production could not insert any item into the output inventory. */
+    protected boolean outputInventoryBlocked;
 
     public int productionCooldown() {
         return 12000;
@@ -68,7 +76,16 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
         return feedCooldown;
     }
 
+    public boolean isOutputInventoryBlocked() {
+        return outputInventoryBlocked;
+    }
+
     protected abstract ResourceLocation productionLootTable();
+
+    /** Sound played when this roost successfully produces an item. */
+    protected SoundEvent productionSound() {
+        return SoundEvents.CHICKEN_EGG;
+    }
 
     public AnimalRoostBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -77,6 +94,16 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
             @Override
             public int getSlotLimit(int slot) {
                 return CIFConfig.server().roostingInventorySlotSize.get();
+            }
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                if (outputInventoryBlocked) {
+                    outputInventoryBlocked = false;
+                    if (level != null && !level.isClientSide)
+                        notifyUpdate();
+                }
             }
         };
         this.outputHandler = new ItemHandlerWrapper(inventory) {
@@ -134,7 +161,9 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
             changed = true;
         }
         if (eggTime <= 0) {
+            boolean wasBlocked = outputInventoryBlocked;
             boolean inserted = false;
+            var remainders = new ArrayList<ItemStack>();
             var lootTable = serverLevel.getServer().getLootData().getLootTable(productionLootTable());
             var lootParams = new LootParams.Builder(serverLevel)
                     .withParameter(LootContextParams.BLOCK_STATE, getBlockState())
@@ -146,14 +175,27 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
             for (var stack : lootStacks) {
                 ItemStack remainder = ItemHandlerHelper.insertItem(inventory, stack, false);
                 inserted |= stack.getCount() != remainder.getCount();
+                if (!remainder.isEmpty())
+                    remainders.add(remainder);
             }
             if (inserted) {
+                outputInventoryBlocked = false;
+                for (ItemStack remainder : remainders)
+                    Containers.dropItemStack(
+                            serverLevel,
+                            worldPosition.getX() + .5,
+                            worldPosition.getY() + .5,
+                            worldPosition.getZ() + .5,
+                            remainder);
                 eggTime = 6000 + level.random.nextInt(6000);
                 level.playSound(
-                        null, worldPosition, SoundEvents.CHICKEN_EGG, SoundSource.BLOCKS,
+                        null, worldPosition, productionSound(), SoundSource.BLOCKS,
                         1.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
                 changed = true;
+            } else {
+                outputInventoryBlocked = !lootStacks.isEmpty();
             }
+            changed |= wasBlocked != outputInventoryBlocked;
         }
         if (changed)
             notifyUpdate();
@@ -165,6 +207,7 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
         tag.put("Inventory", inventory.serializeNBT());
         tag.putInt("EggLayTime", eggTime);
         tag.putInt("FeedCooldown", feedCooldown);
+        tag.putBoolean("OutputInventoryBlocked", outputInventoryBlocked);
     }
 
     @Override
@@ -173,6 +216,7 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
         inventory.deserializeNBT(tag.getCompound("Inventory"));
         eggTime = Mth.clamp(tag.getInt("EggLayTime"), 0, 12000);
         feedCooldown = tag.getInt("FeedCooldown");
+        outputInventoryBlocked = tag.getBoolean("OutputInventoryBlocked");
     }
 
     @Override
@@ -191,4 +235,25 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
     }
 
     public abstract boolean feedItem(ItemStack stack, boolean simulate);
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        if (eggTime > 0) {
+            int seconds = (eggTime + 19) / 20;
+            String remaining = String.format("%d:%02d", seconds / 60, seconds % 60);
+            addGoggleLine(tooltip, "goggles.roost.next_output", ChatFormatting.GRAY, remaining);
+        } else if (outputInventoryBlocked) {
+            addGoggleLine(tooltip, "goggles.roost.output_inventory_full", ChatFormatting.RED);
+        } else {
+            addGoggleLine(tooltip, "goggles.roost.ready", ChatFormatting.GOLD);
+        }
+        return true;
+    }
+
+    private static void addGoggleLine(List<Component> tooltip, String key, ChatFormatting color, Object... args) {
+        new net.createmod.catnip.lang.LangBuilder("create_integrated_farming")
+                .translate(key, args)
+                .style(color)
+                .forGoggles(tooltip);
+    }
 }

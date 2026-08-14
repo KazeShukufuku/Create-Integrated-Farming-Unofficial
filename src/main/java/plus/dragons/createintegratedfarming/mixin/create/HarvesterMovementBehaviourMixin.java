@@ -34,7 +34,7 @@ public class HarvesterMovementBehaviourMixin {
     @Inject(method = "visitNewPosition", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/actors/harvester/HarvesterMovementBehaviour;isValidCrop(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"), cancellable = true, remap = false)
     private void createintegratedfarming$applyCustomHarvesterBehaviour(MovementContext context, BlockPos pos, CallbackInfo ci, @Local BlockState stateVisited) {
         var behaviour = CustomHarvestBehaviour.REGISTRY.get(stateVisited);
-        if (behaviour == null)
+        if (behaviour == null || !behaviour.handlesMechanicalHarvester())
             return;
         behaviour.harvest((HarvesterMovementBehaviour) (Object) this, context, pos, stateVisited);
         ci.cancel();

@@ -25,12 +25,19 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import plus.dragons.createintegratedfarming.client.renderer.VacuumHarvesterRenderer;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
+import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterBlockEntity;
 
 public class CIFBlockEntities {
     public static final BlockEntityEntry<ChickenRoostBlockEntity> CHICKEN_ROOST = REGISTRATE
             .blockEntity("chicken_roost", ChickenRoostBlockEntity::new)
             .validBlock(CIFBlocks.CHICKEN_ROOST)
+            .register();
+    public static final BlockEntityEntry<VacuumHarvesterBlockEntity> VACUUM_HARVESTER = REGISTRATE
+            .blockEntity("vacuum_harvester", VacuumHarvesterBlockEntity::new)
+            .validBlock(CIFBlocks.VACUUM_HARVESTER)
+            .renderer(() -> VacuumHarvesterRenderer::new)
             .register();
 
     public static void register(IEventBus modBus) {

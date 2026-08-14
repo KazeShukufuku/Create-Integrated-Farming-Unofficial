@@ -31,6 +31,7 @@ import plus.dragons.createintegratedfarming.integration.delightoflight.ponder.De
 import plus.dragons.createintegratedfarming.integration.farmersdelight.ponder.FDPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder.MNDPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoostPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.ponder.TwilightDelightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.untitledduck.ponder.UntitledDuckPonderPlugin;
 
@@ -38,6 +39,9 @@ import plus.dragons.createintegratedfarming.integration.untitledduck.ponder.Unti
 public class CIFClient {
     @SubscribeEvent
     public static void init(final FMLClientSetupEvent event) {
+        // Partial models must be registered before the model baker runs; Ponder
+        // can otherwise request this moving assembly for the first time too late.
+        CIFPartialModels.init();
         PonderIndex.addPlugin(new CIFPonderPlugin());
         if (ModIntegration.FARMERS_DELIGHT.enabled())
             FDPonderPlugin.register();
@@ -53,5 +57,9 @@ public class CIFClient {
             DelightOFlightPonderPlugin.register();
         if (ModIntegration.TWILIGHT_DELIGHT.enabled())
             TwilightDelightPonderPlugin.register();
+        if (ModIntegration.ENVIRONMENTAL.enabled())
+            DynamicBirdRoostPonderPlugin.registerEnvironmental();
+        if (ModIntegration.AUTUMNITY.enabled())
+            DynamicBirdRoostPonderPlugin.registerAutumnity();
     }
 }

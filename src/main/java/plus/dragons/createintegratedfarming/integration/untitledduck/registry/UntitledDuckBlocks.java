@@ -25,6 +25,7 @@ import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.data.loading.DatagenModLoader;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import plus.dragons.createintegratedfarming.common.registry.CIFCreativeModeTabs;
@@ -46,7 +47,10 @@ public class UntitledDuckBlocks {
     private static BlockEntry<DuckRoostBlock> registerDuckRoost(String path, byte variant) {
         return REGISTRATE.block(path, prop -> new DuckRoostBlock(prop, ROOST, variant))
                 .lang("Duck Roost")
-                .properties(prop -> prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD))
+                .properties(prop -> {
+                    var result = prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD);
+                    return DatagenModLoader.isRunningDataGen() ? result.noLootTable() : result;
+                })
                 .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), AssetLookup.standardModel(ctx, prov)))
                 .item()
                 .build()
@@ -56,7 +60,10 @@ public class UntitledDuckBlocks {
     private static BlockEntry<GooseRoostBlock> registerGooseRoost(String path, byte variant) {
         return REGISTRATE.block(path, prop -> new GooseRoostBlock(prop, ROOST, variant))
                 .lang("Goose Roost")
-                .properties(prop -> prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD))
+                .properties(prop -> {
+                    var result = prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD);
+                    return DatagenModLoader.isRunningDataGen() ? result.noLootTable() : result;
+                })
                 .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), AssetLookup.standardModel(ctx, prov)))
                 .item()
                 .build()
