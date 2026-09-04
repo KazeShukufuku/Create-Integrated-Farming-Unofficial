@@ -1,6 +1,5 @@
 {
-  "fluid": "createaddition:seed_oil",
-  "required": false,
+  "tag": "forge:plantoil",
   "progress": 2400,
   "cooldown": {
     "type": "minecraft:uniform",
