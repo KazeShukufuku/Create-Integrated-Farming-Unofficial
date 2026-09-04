@@ -1,5 +1,7 @@
 {
   "block.create_integrated_farming.chicken_roost": "Chicken Roost",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_cold": "Cold Chicken Roost",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_warm": "Warm Chicken Roost",
   "block.create_integrated_farming.duck_roost_campbell": "Duck Roost",
   "block.create_integrated_farming.duck_roost_female": "Duck Roost",
   "block.create_integrated_farming.duck_roost_normal": "Duck Roost",
@@ -23,8 +25,8 @@
   "create_integrated_farming.ponder.fishing_net.text_3": "Fishing Net will catch small animal in water",
   "create_integrated_farming.ponder.lava_fishing_net.header": "Using Lava Fishing Net on Contraptions",
   "create_integrated_farming.ponder.lava_fishing_net.text_1": "Whenever Lava Fishing Nets are moved as part of an animated Contraption...",
-  "create_integrated_farming.ponder.lava_fishing_net.text_2": "They will fish in lava, like a player fishing with a Lava Fishing Rod",
-  "create_integrated_farming.ponder.lava_fishing_net.text_3": "Lava Fishing Net will catch small animal in lava",
+  "create_integrated_farming.ponder.lava_fishing_net.text_2": "They fish in lava just as a player would with a fishing rod",
+  "create_integrated_farming.ponder.lava_fishing_net.text_3": "They can catch both fish and other items found while lava fishing",
   "create_integrated_farming.ponder.lightning_rod.charge_soil.header": "Charging Soil",
   "create_integrated_farming.ponder.lightning_rod.charge_soil.text_1": "Charging process of Soil to Weather Soil can be completed via Lightning Rod by Lightning Strike",
   "create_integrated_farming.ponder.mechanical_arm.harvest_lily_pads.header": "Harvesting Lily Pads",

@@ -42,7 +42,9 @@ public enum ModIntegration {
     FESTIVE_DELIGHT(Mods.FESTIVE_DELIGHT),
     NETHERS_EXOTICISM(Mods.NETHERS_EXOTICISM),
     ENVIRONMENTAL(Mods.ENVIRONMENTAL),
-    AUTUMNITY(Mods.AUTUMNITY);
+    AUTUMNITY(Mods.AUTUMNITY),
+    TIDE(Mods.TIDE),
+    VANILLA_BACKPORT(Mods.VANILLA_BACKPORT);
 
     private final String id;
 
@@ -90,5 +92,7 @@ public enum ModIntegration {
         public static final String NETHERS_EXOTICISM = "nethersexoticism";
         public static final String ENVIRONMENTAL = "environmental";
         public static final String AUTUMNITY = "autumnity";
+        public static final String TIDE = "tide";
+        public static final String VANILLA_BACKPORT = "vanillabackport";
     }
 }

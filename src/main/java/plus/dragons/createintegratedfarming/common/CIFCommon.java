@@ -21,6 +21,7 @@ package plus.dragons.createintegratedfarming.common;
 import com.simibubi.create.foundation.item.ItemDescription;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +30,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import plus.dragons.createdragonsplus.common.CDPRegistrate;
 import plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetEntityCaptures;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlockEntities;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlockSpoutingBehaviours;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlocks;
@@ -43,7 +47,10 @@ import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDHarvestBehaviours;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry.NDUBlocks;
+import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishing.NDUFishingNetCatchProvider;
+import plus.dragons.createintegratedfarming.integration.tide.TideIntegration;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.VanillaBackportIntegration;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostCapturables;
 import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoosts;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.registry.TwilightDelightArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.registry.TwilightDelightHarvestBehaviours;
@@ -61,6 +68,8 @@ public class CIFCommon {
         REGISTRATE.registerEventListeners(modBus);
         CIFCreativeModeTabs.register(modBus);
         CIFBlocks.register(modBus);
+        if (ModIntegration.VANILLA_BACKPORT.enabled())
+            VanillaBackportIntegration.register(modBus);
         if (ModIntegration.UNTITLED_DUCK.enabled())
             UntitledDuckBlocks.register(modBus);
         CIFBlockEntities.register(modBus);
@@ -73,8 +82,18 @@ public class CIFCommon {
         if (ModIntegration.TWILIGHT_DELIGHT.enabled())
             TwilightDelightArmInteractionPointTypes.register();
         CIFArmInteractionPoints.register(modBus);
-        if (ModIntegration.NETHER_DEPTHS_UPGRADE.enabled())
-            NDUBlocks.register();
+        FishingNetCatchProviders.register(asResource("vanilla"), FishingNetMedium.WATER, context ->
+                context.level().getServer().getLootData().getLootTable(BuiltInLootTables.FISHING)
+                        .getRandomItems(context.lootParams()));
+        if (ModIntegration.NETHER_DEPTHS_UPGRADE.enabled()) {
+            FishingNetCatchProviders.register(
+                    ModIntegration.NETHER_DEPTHS_UPGRADE.asResource("fishing_net"),
+                    FishingNetMedium.LAVA,
+                    new NDUFishingNetCatchProvider());
+            FishingNetEntityCaptures.register(com.scouter.netherdepthsupgrade.entity.LavaAnimal.class::isInstance);
+        }
+        if (ModIntegration.TIDE.enabled())
+            TideIntegration.register();
         if (ModIntegration.ENVIRONMENTAL.enabled())
             DynamicBirdRoosts.registerEnvironmental(modBus);
         if (ModIntegration.AUTUMNITY.enabled())
@@ -106,6 +125,8 @@ public class CIFCommon {
                 || ModIntegration.CORN_DELIGHT.enabled())
             event.enqueueWork(plus.dragons.createintegratedfarming.integration.RegistryHarvestBehaviours::register);
         event.enqueueWork(CIFRoostCapturables::register);
+        if (ModIntegration.VANILLA_BACKPORT.enabled())
+            event.enqueueWork(VanillaBackportRoostCapturables::register);
         if (ModIntegration.UNTITLED_DUCK.enabled())
             event.enqueueWork(UntitledDuckCapturables::register);
         if (ModIntegration.ENVIRONMENTAL.enabled())

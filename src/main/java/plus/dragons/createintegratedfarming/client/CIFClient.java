@@ -30,10 +30,11 @@ import plus.dragons.createintegratedfarming.integration.crabbersdelight.ponder.C
 import plus.dragons.createintegratedfarming.integration.delightoflight.ponder.DelightOFlightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.ponder.FDPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder.MNDPonderPlugin;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUFishingNetPonderExample;
 import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoostPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.ponder.TwilightDelightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.untitledduck.ponder.UntitledDuckPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.tide.TideFishingNetPonderExample;
 
 @Mod.EventBusSubscriber(modid = CIFCommon.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class CIFClient {
@@ -48,7 +49,9 @@ public class CIFClient {
         if (ModIntegration.MY_NETHERS_DELIGHT.enabled())
             MNDPonderPlugin.register();
         if (ModIntegration.NETHER_DEPTHS_UPGRADE.enabled())
-            NDUPonderPlugin.register();
+            NDUFishingNetPonderExample.register();
+        if (ModIntegration.TIDE.enabled())
+            TideFishingNetPonderExample.register();
         if (ModIntegration.CRABBERS_DELIGHT.enabled())
             CrabbersDelightPonderPlugin.register();
         if (ModIntegration.UNTITLED_DUCK.enabled())

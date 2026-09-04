@@ -15,7 +15,8 @@ def cifMixinConfigs = [
         'create_integrated_farming.mixins.json',
         'create_integrated_farming.createenchantablemachinery.mixins.json',
         'create_integrated_farming.delightoflight.mixins.json',
-        'create_integrated_farming.netherdepthsupgrade.mixins.json'
+        'create_integrated_farming.netherdepthsupgrade.mixins.json',
+        'create_integrated_farming.tide.mixins.json'
 ]
 
 java {
@@ -153,6 +154,10 @@ dependencies {
     compatMod curse('createaddition', '439890', '7208610')
     compatMod curse('geckolib', '388172', '7553267')
     compatMod curse('cultural-delights', '574622', '8126187')
+    compatMod curse('tide', '884685', '8571673')
+    compatMod curse('vanilla-backport', '417430', '8229712')
+    runtimeMod curse('cloth-config', '348521', '5729105')
+    runtimeMod curse('platform', '997634', '8214829')
 
     // Optional integrations added for the 1.20.1 port. Keep them on the
     // development runtime so runClient can exercise every compatibility path.
