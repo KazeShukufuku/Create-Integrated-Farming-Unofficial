@@ -23,8 +23,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.common.MinecraftForge;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
+import plus.dragons.createintegratedfarming.common.network.RoostingDisplayClientCache;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.ponder.CrabbersDelightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.delightoflight.ponder.DelightOFlightPonderPlugin;
@@ -40,6 +43,7 @@ import plus.dragons.createintegratedfarming.integration.tide.TideFishingNetPonde
 public class CIFClient {
     @SubscribeEvent
     public static void init(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.addListener(CIFClient::onLogout);
         // Partial models must be registered before the model baker runs; Ponder
         // can otherwise request this moving assembly for the first time too late.
         CIFPartialModels.init();
@@ -64,5 +68,9 @@ public class CIFClient {
             DynamicBirdRoostPonderPlugin.registerEnvironmental();
         if (ModIntegration.AUTUMNITY.enabled())
             DynamicBirdRoostPonderPlugin.registerAutumnity();
+    }
+
+    private static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
+        RoostingDisplayClientCache.clear();
     }
 }

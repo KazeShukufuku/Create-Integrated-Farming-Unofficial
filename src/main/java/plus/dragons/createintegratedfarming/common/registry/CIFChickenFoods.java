@@ -62,6 +62,14 @@ public class CIFChickenFoods {
         return null;
     }
 
+    public static List<ItemFoodEntry> itemFoods() {
+        return itemFoods;
+    }
+
+    public static List<FluidFoodEntry> fluidFoods() {
+        return fluidFoods;
+    }
+
     private static ItemFoodEntry parseItemFood(ResourceLocation id, JsonObject json) {
         var ingredient = Ingredient.fromJson(GsonHelper.getNonNull(json, "ingredient"));
         var food = new ChickenFoodItem(
@@ -148,11 +156,11 @@ public class CIFChickenFoods {
         return Optional.of(new ItemStack(item, count));
     }
 
-    private record ItemFoodEntry(Ingredient ingredient, ChickenFoodItem food) {
+    public record ItemFoodEntry(Ingredient ingredient, ChickenFoodItem food) {
     }
 
-    private record FluidFoodEntry(Optional<ResourceLocation> fluidId, Optional<TagKey<Fluid>> fluidTag, ChickenFoodFluid food) {
-        boolean matches(Fluid fluid) {
+    public record FluidFoodEntry(Optional<ResourceLocation> fluidId, Optional<TagKey<Fluid>> fluidTag, ChickenFoodFluid food) {
+        public boolean matches(Fluid fluid) {
             if (fluid == Fluids.EMPTY)
                 return false;
             if (fluidId.isPresent() && fluidId.get().equals(BuiltInRegistries.FLUID.getKey(fluid)))

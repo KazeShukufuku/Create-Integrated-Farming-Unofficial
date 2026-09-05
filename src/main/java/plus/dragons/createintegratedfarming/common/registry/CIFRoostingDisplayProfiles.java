@@ -18,25 +18,25 @@
 
 package plus.dragons.createintegratedfarming.common.registry;
 
-import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
-import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.fluids.FluidStack;
+import java.util.List;
+import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.ranching.roost.AnimalRoostBlockEntity;
-import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlock;
+import plus.dragons.createintegratedfarming.common.ranching.roost.display.ItemFeedSource;
+import plus.dragons.createintegratedfarming.common.ranching.roost.display.RoostingDisplayProfile;
+import plus.dragons.createintegratedfarming.common.ranching.roost.display.RoostingDisplayProfiles;
 
-public class CIFBlockSpoutingBehaviours {
-    private static final BlockSpoutingBehaviour ROOST_FEEDING = CIFBlockSpoutingBehaviours::fillRoost;
+public final class CIFRoostingDisplayProfiles {
+    private CIFRoostingDisplayProfiles() {}
 
     public static void register() {
-        BlockSpoutingBehaviour.BY_BLOCK.registerProvider(
-                block -> block instanceof RoostBlock ? ROOST_FEEDING : null);
-    }
-
-    private static int fillRoost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (level.getBlockEntity(pos) instanceof AnimalRoostBlockEntity roost)
-            return roost.feedFluid(fluid, simulate);
-        return 0;
+        RoostingDisplayProfiles.register(new RoostingDisplayProfile(
+                CIFCommon.asResource("roosting/chicken"),
+                CIFBlocks.CHICKEN_ROOST,
+                List.of(),
+                ItemFeedSource.chickenDataMap(),
+                CIFLootTables.CHICKEN_ROOST,
+                AnimalRoostBlockEntity.DEFAULT_MINIMUM_PRODUCTION_TICKS,
+                AnimalRoostBlockEntity.DEFAULT_MAXIMUM_PRODUCTION_TICKS));
     }
 }
+

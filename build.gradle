@@ -176,6 +176,7 @@ dependencies {
     runtimeMod curse('jade', '324717', '6855440')
     runtimeMod curse('jade-addons', '583345', '6274674')
     runtimeMod curse('just-enough-characters', '250702', '7411324')
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:15.20.0.132")
     runtimeMod "mezz.jei:jei-${minecraft_version}-forge:15.20.0.132"
     runtimeOnly fg.deobf("thedarkcolour:kotlinforforge:4.11.0")
 

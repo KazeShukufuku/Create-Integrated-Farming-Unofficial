@@ -33,12 +33,15 @@ import plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoi
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetEntityCaptures;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
+import plus.dragons.createintegratedfarming.common.network.CIFPackets;
+import plus.dragons.createintegratedfarming.common.ranching.roost.display.RoostingDisplaySync;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlockEntities;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlockSpoutingBehaviours;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlocks;
 import plus.dragons.createintegratedfarming.common.registry.CIFCreativeModeTabs;
 import plus.dragons.createintegratedfarming.common.registry.CIFChickenFoods;
 import plus.dragons.createintegratedfarming.common.registry.CIFRoostCapturables;
+import plus.dragons.createintegratedfarming.common.registry.CIFRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.registry.CrabbersDelightArmInteractionPointTypes;
@@ -51,12 +54,16 @@ import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishi
 import plus.dragons.createintegratedfarming.integration.tide.TideIntegration;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.VanillaBackportIntegration;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostCapturables;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoosts;
+import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityRoostingDisplayProfiles;
+import plus.dragons.createintegratedfarming.integration.environmental.registry.EnvironmentalRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.registry.TwilightDelightArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.registry.TwilightDelightHarvestBehaviours;
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckBlockEntities;
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckBlocks;
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckCapturables;
+import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckRoostingDisplayProfiles;
 
 public class CIFCommon {
     public static final String ID = "create_integrated_farming";
@@ -66,6 +73,8 @@ public class CIFCommon {
 
     public static void init(IEventBus modBus) {
         REGISTRATE.registerEventListeners(modBus);
+        CIFPackets.register();
+        RoostingDisplaySync.register();
         CIFCreativeModeTabs.register(modBus);
         CIFBlocks.register(modBus);
         if (ModIntegration.VANILLA_BACKPORT.enabled())
@@ -125,14 +134,23 @@ public class CIFCommon {
                 || ModIntegration.CORN_DELIGHT.enabled())
             event.enqueueWork(plus.dragons.createintegratedfarming.integration.RegistryHarvestBehaviours::register);
         event.enqueueWork(CIFRoostCapturables::register);
+        event.enqueueWork(CIFRoostingDisplayProfiles::register);
         if (ModIntegration.VANILLA_BACKPORT.enabled())
             event.enqueueWork(VanillaBackportRoostCapturables::register);
+        if (ModIntegration.VANILLA_BACKPORT.enabled())
+            event.enqueueWork(VanillaBackportRoostingDisplayProfiles::register);
         if (ModIntegration.UNTITLED_DUCK.enabled())
             event.enqueueWork(UntitledDuckCapturables::register);
+        if (ModIntegration.UNTITLED_DUCK.enabled())
+            event.enqueueWork(UntitledDuckRoostingDisplayProfiles::register);
         if (ModIntegration.ENVIRONMENTAL.enabled())
             event.enqueueWork(DynamicBirdRoosts::registerEnvironmentalCapturable);
+        if (ModIntegration.ENVIRONMENTAL.enabled())
+            event.enqueueWork(EnvironmentalRoostingDisplayProfiles::register);
         if (ModIntegration.AUTUMNITY.enabled())
             event.enqueueWork(DynamicBirdRoosts::registerAutumnityCapturable);
+        if (ModIntegration.AUTUMNITY.enabled())
+            event.enqueueWork(AutumnityRoostingDisplayProfiles::register);
     }
 
     public static ResourceLocation asResource(String path) {
