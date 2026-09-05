@@ -18,16 +18,13 @@
 
 package plus.dragons.createintegratedfarming.common.fishing.net;
 
-import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.FishingHook;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.item.ItemStack;
+import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public class FishingNetContext extends AbstractFishingNetContext<FishingHook> {
     public FishingNetContext(ServerLevel level, ItemStack fishingRod) {
@@ -40,16 +37,46 @@ public class FishingNetContext extends AbstractFishingNetContext<FishingHook> {
     }
 
     @Override
-    protected boolean isPosValidForFishing(ServerLevel level, BlockPos pos) {
-        return level.getFluidState(pos).is(FluidTags.WATER);
+    public boolean isPosValidForFishing(ServerLevel level, BlockPos pos) {
+        return level.getFluidState(pos).is(FluidTags.WATER)
+                && level.getBlockState(pos).getCollisionShape(level, pos).isEmpty();
     }
 
     @Override
-    public LootTable getLootTable(ServerLevel level, BlockPos pos) {
-        return level.getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
+    protected FishingNetMedium getMedium() {
+        return FishingNetMedium.WATER;
     }
 
-    public LootParams buildFishingLootContext(MovementContext context, ServerLevel level, BlockPos pos) {
-        return super.buildFishingLootContext(context, level, pos);
+    @Override
+    protected boolean isOpenFluid(ServerLevel level, BlockPos pos) {
+        if (!CIFConfig.server().fishingNetChecksOpenWater.get())
+            return false;
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        boolean foundAir = false;
+        for (int y = -1; y <= 2; y++) {
+            boolean allSourceWater = true;
+            boolean allAir = true;
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+                    cursor.setWithOffset(pos, x, y, z);
+                    var state = level.getBlockState(cursor);
+                    var fluid = state.getFluidState();
+                    allSourceWater &= fluid.is(FluidTags.WATER)
+                            && fluid.isSource()
+                            && state.getCollisionShape(level, cursor).isEmpty();
+                    allAir &= state.isAir();
+                }
+            }
+            if (!allSourceWater && !allAir)
+                return false;
+            if (allAir) {
+                if (y == -1)
+                    return false;
+                foundAir = true;
+            } else if (foundAir) {
+                return false;
+            }
+        }
+        return true;
     }
 }

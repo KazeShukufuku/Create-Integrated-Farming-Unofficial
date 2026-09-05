@@ -23,19 +23,20 @@ import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
-import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
+import plus.dragons.createintegratedfarming.common.ranching.roost.AnimalRoostBlockEntity;
+import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlock;
 
 public class CIFBlockSpoutingBehaviours {
+    private static final BlockSpoutingBehaviour ROOST_FEEDING = CIFBlockSpoutingBehaviours::fillRoost;
+
     public static void register() {
-        BlockSpoutingBehaviour.BY_BLOCK.register(
-                CIFBlocks.CHICKEN_ROOST.get(),
-                CIFBlockSpoutingBehaviours::fillChickenCoop);
+        BlockSpoutingBehaviour.BY_BLOCK.registerProvider(
+                block -> block instanceof RoostBlock ? ROOST_FEEDING : null);
     }
 
-    private static int fillChickenCoop(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (level.getBlockEntity(pos) instanceof ChickenRoostBlockEntity coop) {
-            return coop.feedFluid(fluid, simulate);
-        }
+    private static int fillRoost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
+        if (level.getBlockEntity(pos) instanceof AnimalRoostBlockEntity roost)
+            return roost.feedFluid(fluid, simulate);
         return 0;
     }
 }

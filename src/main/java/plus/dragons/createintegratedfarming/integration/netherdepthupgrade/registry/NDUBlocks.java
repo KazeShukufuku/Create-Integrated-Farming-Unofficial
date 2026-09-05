@@ -18,34 +18,12 @@
 
 package plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry;
 
-import static com.simibubi.create.foundation.data.TagGen.axeOnly;
-import static plus.dragons.createintegratedfarming.common.CIFCommon.REGISTRATE;
-
-import com.simibubi.create.AllTags;
-import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
-import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.MapColor;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishing.net.LavaFishingNetBlock;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishing.net.LavaFishingNetMovementBehaviour;
+import plus.dragons.createintegratedfarming.common.fishing.net.LavaFishingNetBlock;
+import plus.dragons.createintegratedfarming.common.registry.CIFBlocks;
 
 public class NDUBlocks {
-    public static final BlockEntry<LavaFishingNetBlock> LAVA_FISHING_NET = REGISTRATE
-            .block("lava_fishing_net", LavaFishingNetBlock::new)
-            .lang("Lava Fishing Net")
-            .initialProperties(SharedProperties::softMetal)
-            .properties(prop -> prop.mapColor(MapColor.METAL)
-                    .sound(SoundType.CHAIN)
-                    .noOcclusion()
-                    .noLootTable())
-            .transform(axeOnly())
-            .tag(AllTags.AllBlockTags.WINDMILL_SAILS.tag)
-            .blockstate(BlockStateGen.directionalBlockProvider(false))
-            .onRegister(block -> MovementBehaviour.REGISTRY.register(block, new LavaFishingNetMovementBehaviour()))
-            .simpleItem()
-            .register();
+    public static final BlockEntry<LavaFishingNetBlock> LAVA_FISHING_NET = CIFBlocks.LAVA_FISHING_NET;
 
     public static void register() {}
 }

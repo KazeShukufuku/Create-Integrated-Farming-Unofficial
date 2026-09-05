@@ -23,22 +23,27 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.common.MinecraftForge;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
+import plus.dragons.createintegratedfarming.common.network.RoostingDisplayClientCache;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.ponder.CrabbersDelightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.delightoflight.ponder.DelightOFlightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.ponder.FDPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder.MNDPonderPlugin;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUFishingNetPonderExample;
 import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoostPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.ponder.TwilightDelightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.untitledduck.ponder.UntitledDuckPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.tide.TideFishingNetPonderExample;
 
 @Mod.EventBusSubscriber(modid = CIFCommon.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class CIFClient {
     @SubscribeEvent
     public static void init(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.addListener(CIFClient::onLogout);
         // Partial models must be registered before the model baker runs; Ponder
         // can otherwise request this moving assembly for the first time too late.
         CIFPartialModels.init();
@@ -48,7 +53,9 @@ public class CIFClient {
         if (ModIntegration.MY_NETHERS_DELIGHT.enabled())
             MNDPonderPlugin.register();
         if (ModIntegration.NETHER_DEPTHS_UPGRADE.enabled())
-            NDUPonderPlugin.register();
+            NDUFishingNetPonderExample.register();
+        if (ModIntegration.TIDE.enabled())
+            TideFishingNetPonderExample.register();
         if (ModIntegration.CRABBERS_DELIGHT.enabled())
             CrabbersDelightPonderPlugin.register();
         if (ModIntegration.UNTITLED_DUCK.enabled())
@@ -61,5 +68,9 @@ public class CIFClient {
             DynamicBirdRoostPonderPlugin.registerEnvironmental();
         if (ModIntegration.AUTUMNITY.enabled())
             DynamicBirdRoostPonderPlugin.registerAutumnity();
+    }
+
+    private static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
+        RoostingDisplayClientCache.clear();
     }
 }

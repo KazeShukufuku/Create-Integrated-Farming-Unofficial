@@ -40,23 +40,24 @@ public class DynamicBirdRoostBlockEntity extends AnimalRoostBlockEntity {
     }
 
     @Override
+    protected SoundEvent feedingSound() {
+        return bird.ambientSound();
+    }
+
+    @Override
     public boolean feedItem(ItemStack stack, boolean simulate) {
         assert level != null;
         if (feedCooldown > 0 || eggTime <= 0 || !stack.is(bird.foodTag()))
             return false;
         if (simulate)
             return true;
-        eggTime = Math.max(0, eggTime - 2400);
-        feedCooldown = 400 + level.random.nextInt(401);
+        applyFeeding(2400, 400 + level.random.nextInt(401));
         var facing = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         Vec3 feedPos = Vec3.atBottomCenterOf(worldPosition)
                 .add(facing.getStepX() * .5F, 13 / 16F, facing.getStepZ() * .5F);
-        level.playSound(null, worldPosition, bird.ambientSound(), SoundSource.BLOCKS,
-                1.0F, (level.random.nextFloat() - level.random.nextFloat()) * .2F + 1.0F);
         var remainder = stack.getCraftingRemainingItem();
         if (!remainder.isEmpty())
             Containers.dropItemStack(level, feedPos.x, feedPos.y, feedPos.z, remainder.copy());
-        notifyUpdate();
         return true;
     }
 

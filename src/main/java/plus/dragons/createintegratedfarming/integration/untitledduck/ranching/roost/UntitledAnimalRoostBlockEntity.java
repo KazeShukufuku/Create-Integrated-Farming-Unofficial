@@ -37,8 +37,11 @@ import net.minecraft.world.phys.Vec3;
 import plus.dragons.createintegratedfarming.common.ranching.roost.AnimalRoostBlockEntity;
 
 public abstract class UntitledAnimalRoostBlockEntity extends AnimalRoostBlockEntity {
-    private static final IntProvider FOOD_PROGRESSION = ConstantInt.of(2400);
-    private static final IntProvider FOOD_COOLDOWN = UniformInt.of(400, 800);
+    public static final int FOOD_PROGRESSION = 2400;
+    public static final int MINIMUM_FOOD_COOLDOWN = 400;
+    public static final int MAXIMUM_FOOD_COOLDOWN = 800;
+    private static final IntProvider FOOD_PROGRESSION_PROVIDER = ConstantInt.of(FOOD_PROGRESSION);
+    private static final IntProvider FOOD_COOLDOWN_PROVIDER = UniformInt.of(MINIMUM_FOOD_COOLDOWN, MAXIMUM_FOOD_COOLDOWN);
 
     public UntitledAnimalRoostBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -47,6 +50,11 @@ public abstract class UntitledAnimalRoostBlockEntity extends AnimalRoostBlockEnt
     public abstract Predicate<ItemStack> getFoodPredicate();
 
     public abstract SoundEvent getAmbientSound();
+
+    @Override
+    protected SoundEvent feedingSound() {
+        return getAmbientSound();
+    }
 
     @Override
     public boolean feedItem(ItemStack stack, boolean simulate) {
@@ -63,12 +71,7 @@ public abstract class UntitledAnimalRoostBlockEntity extends AnimalRoostBlockEnt
                     new ItemParticleOption(ParticleTypes.ITEM, stack),
                     feedPos.x, feedPos.y, feedPos.z,
                     0, 0, 0);
-            eggTime = Math.max(0, eggTime - FOOD_PROGRESSION.sample(level.random));
-            feedCooldown = FOOD_COOLDOWN.sample(level.random);
-            level.playSound(
-                    null, worldPosition, getAmbientSound(), SoundSource.BLOCKS,
-                    1.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
-            notifyUpdate();
+            applyFeeding(FOOD_PROGRESSION_PROVIDER.sample(level.random), FOOD_COOLDOWN_PROVIDER.sample(level.random));
             var remainer = stack.getCraftingRemainingItem();
             if (!remainer.isEmpty())
                 Containers.dropItemStack(level, feedPos.x, feedPos.y, feedPos.z, remainer.copy());

@@ -19,6 +19,7 @@
 package plus.dragons.createintegratedfarming.client.ponder;
 
 import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
+import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.CONTRAPTION_ACTOR;
 
 import com.simibubi.create.AllBlocks;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -70,6 +71,12 @@ public class CIFPonderTags {
         entryHelper.addToTag(FISHING_APPLIANCES)
                 .add(CIFBlocks.FISHING_NET)
                 .add(AllBlocks.DEPLOYER);
+
+        if (CIFBlocks.isLavaFishingNetEnabled()) {
+            entryHelper.addToTag(FISHING_APPLIANCES).add(CIFBlocks.LAVA_FISHING_NET);
+            entryHelper.addToTag(ARM_TARGETS).add(CIFBlocks.LAVA_FISHING_NET);
+            entryHelper.addToTag(CONTRAPTION_ACTOR).add(CIFBlocks.LAVA_FISHING_NET);
+        }
 
         entryHelper.addToTag(ARM_TARGETS)
                 .add(CIFBlocks.CHICKEN_ROOST);

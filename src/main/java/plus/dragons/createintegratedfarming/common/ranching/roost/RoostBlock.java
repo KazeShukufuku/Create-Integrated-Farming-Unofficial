@@ -89,7 +89,7 @@ public class RoostBlock extends HorizontalDirectionalBlock implements IWrenchabl
         if (!optional.isPresent())
             return InteractionResult.PASS;
         var entity = optional.get();
-        var capturable = RoostCapturable.REGISTRY.get(entity.getType());
+        var capturable = RoostCapturable.resolve(entity);
         if (capturable == null)
             return InteractionResult.PASS;
         return capturable.captureBlock(level, state, pos, stack, player, entity);

@@ -27,7 +27,6 @@ public enum ModIntegration {
     FARMERS_DELIGHT(Mods.FARMERS_DELIGHT),
     MY_NETHERS_DELIGHT(Mods.MY_NETHERS_DELIGHT),
     CREATE_ENCHANTABLE_MACHINERY(Mods.CREATE_ENCHANTABLE_MACHINERY),
-    CREATE_CRAFT_AND_ADDITIONS(Mods.CREATE_CRAFT_AND_ADDITIONS),
     NETHER_DEPTHS_UPGRADE(Mods.NETHER_DEPTHS_UPGRADE),
     CRABBERS_DELIGHT(Mods.CRABBERS_DELIGHT),
     UNTITLED_DUCK(Mods.UNTITLED_DUCK),
@@ -43,7 +42,9 @@ public enum ModIntegration {
     FESTIVE_DELIGHT(Mods.FESTIVE_DELIGHT),
     NETHERS_EXOTICISM(Mods.NETHERS_EXOTICISM),
     ENVIRONMENTAL(Mods.ENVIRONMENTAL),
-    AUTUMNITY(Mods.AUTUMNITY);
+    AUTUMNITY(Mods.AUTUMNITY),
+    TIDE(Mods.TIDE),
+    VANILLA_BACKPORT(Mods.VANILLA_BACKPORT);
 
     private final String id;
 
@@ -75,7 +76,6 @@ public enum ModIntegration {
         public static final String FARMERS_DELIGHT = "farmersdelight";
         public static final String MY_NETHERS_DELIGHT = "mynethersdelight";
         public static final String CREATE_ENCHANTABLE_MACHINERY = "createenchantablemachinery";
-        public static final String CREATE_CRAFT_AND_ADDITIONS = "createadditions";
         public static final String NETHER_DEPTHS_UPGRADE = "netherdepthsupgrade";
         public static final String CRABBERS_DELIGHT = "crabbersdelight";
         public static final String UNTITLED_DUCK = "untitledduckmod";
@@ -92,5 +92,7 @@ public enum ModIntegration {
         public static final String NETHERS_EXOTICISM = "nethersexoticism";
         public static final String ENVIRONMENTAL = "environmental";
         public static final String AUTUMNITY = "autumnity";
+        public static final String TIDE = "tide";
+        public static final String VANILLA_BACKPORT = "vanillabackport";
     }
 }

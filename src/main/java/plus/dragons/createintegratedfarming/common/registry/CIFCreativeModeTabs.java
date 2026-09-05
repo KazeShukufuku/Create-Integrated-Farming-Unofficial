@@ -31,8 +31,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry.NDUBlocks;
 import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoosts;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportBlocks;
 
 public class CIFCreativeModeTabs {
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister
@@ -54,10 +54,14 @@ public class CIFCreativeModeTabs {
 
     private static void buildBaseContents(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         output.accept(FISHING_NET);
-        if (ModIntegration.NETHER_DEPTHS_UPGRADE.enabled())
-            output.accept(NDUBlocks.LAVA_FISHING_NET);
+        if (CIFBlocks.isLavaFishingNetEnabled())
+            output.accept(CIFBlocks.LAVA_FISHING_NET);
         output.accept(ROOST);
         output.accept(CHICKEN_ROOST);
+        if (ModIntegration.VANILLA_BACKPORT.enabled()) {
+            output.accept(VanillaBackportBlocks.CHICKEN_ROOST_WARM);
+            output.accept(VanillaBackportBlocks.CHICKEN_ROOST_COLD);
+        }
         if (ModIntegration.ENVIRONMENTAL.enabled())
             output.accept(DynamicBirdRoosts.environmentalDuck());
         if (ModIntegration.AUTUMNITY.enabled())
