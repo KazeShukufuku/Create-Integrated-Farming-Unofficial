@@ -41,12 +41,14 @@ import plus.dragons.createintegratedfarming.integration.tide.TideFishingNetPonde
 
 @Mod.EventBusSubscriber(modid = CIFCommon.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class CIFClient {
+    public static void construct() {
+        // Register partial models before the first asynchronous resource reload starts.
+        CIFPartialModels.init();
+    }
+
     @SubscribeEvent
     public static void init(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(CIFClient::onLogout);
-        // Partial models must be registered before the model baker runs; Ponder
-        // can otherwise request this moving assembly for the first time too late.
-        CIFPartialModels.init();
         PonderIndex.addPlugin(new CIFPonderPlugin());
         if (ModIntegration.FARMERS_DELIGHT.enabled())
             FDPonderPlugin.register();
