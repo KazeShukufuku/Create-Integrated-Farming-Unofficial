@@ -16,6 +16,6 @@ public final class CIFPartialModels {
     private CIFPartialModels() {}
 
     public static void init() {
-        // Force class initialization during client setup.
+        // Force class initialization during client-side mod construction.
     }
 }
