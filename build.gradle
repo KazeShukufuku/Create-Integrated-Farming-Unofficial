@@ -16,7 +16,8 @@ def cifMixinConfigs = [
         'create_integrated_farming.createenchantablemachinery.mixins.json',
         'create_integrated_farming.delightoflight.mixins.json',
         'create_integrated_farming.netherdepthsupgrade.mixins.json',
-        'create_integrated_farming.tide.mixins.json'
+        'create_integrated_farming.tide.mixins.json',
+        'create_integrated_farming.netherexp.mixins.json'
 ]
 
 java {
@@ -81,6 +82,10 @@ mixin {
 
 repositories {
     mavenCentral()
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
     maven { url = 'https://maven.createmod.net' }
     maven { url = 'https://maven.tterrag.com' }
     maven { url = 'https://maven.ithundxr.dev/mirror' }
@@ -159,12 +164,21 @@ dependencies {
     runtimeMod curse('cloth-config', '348521', '5729105')
     runtimeMod curse('platform', '997634', '8214829')
 
+    // Verified 1.20.1 releases; optional at runtime and never bundled.
+    compatMod "maven.modrinth:neapolitan:${neapolitan_version}"
+    compatMod "maven.modrinth:atmospheric:${atmospheric_version}"
+    compatMod "maven.modrinth:supplementaries:${supplementaries_version}"
+    compatMod "maven.modrinth:haunted-harvest:${haunted_harvest_version}"
+    compatMod "maven.modrinth:moonlight:${moonlight_version}"
+    compatMod "maven.modrinth:jadens-nether-expansion:${nether_expansion_version}"
+    runtimeMod "maven.modrinth:elysium-api:${elysium_api_version}"
+
     // Optional integrations added for the 1.20.1 port. Keep them on the
     // development runtime so runClient can exercise every compatibility path.
     runtimeMod curse('mysterious-mountain-lib', '368098', '7636232')
     runtimeMod curse('corn-delight', '577805', '8219677')
     runtimeMod curse('create-central-kitchen', '820977', '8204836')
-    runtimeMod curse('blueprint', '382216', '8048579')
+    compatMod curse('blueprint', '382216', '8048579')
     runtimeMod curse('environmental', '388992', '7065177')
     runtimeMod curse('autumnity', '365045', '6151402')
     runtimeMod curse('hearth-and-harvest', '1212197', '8416048')

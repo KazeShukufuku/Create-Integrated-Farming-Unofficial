@@ -43,6 +43,11 @@ public enum ModIntegration {
     NETHERS_EXOTICISM(Mods.NETHERS_EXOTICISM),
     ENVIRONMENTAL(Mods.ENVIRONMENTAL),
     AUTUMNITY(Mods.AUTUMNITY),
+    NETHER_EXPANSION(Mods.NETHER_EXPANSION),
+    HAUNTED_HARVEST(Mods.HAUNTED_HARVEST),
+    SUPPLEMENTARIES(Mods.SUPPLEMENTARIES),
+    ATMOSPHERIC(Mods.ATMOSPHERIC),
+    NEAPOLITAN(Mods.NEAPOLITAN),
     TIDE(Mods.TIDE),
     VANILLA_BACKPORT(Mods.VANILLA_BACKPORT);
 
@@ -92,6 +97,11 @@ public enum ModIntegration {
         public static final String NETHERS_EXOTICISM = "nethersexoticism";
         public static final String ENVIRONMENTAL = "environmental";
         public static final String AUTUMNITY = "autumnity";
+        public static final String NETHER_EXPANSION = "netherexp";
+        public static final String HAUNTED_HARVEST = "hauntedharvest";
+        public static final String SUPPLEMENTARIES = "supplementaries";
+        public static final String ATMOSPHERIC = "atmospheric";
+        public static final String NEAPOLITAN = "neapolitan";
         public static final String TIDE = "tide";
         public static final String VANILLA_BACKPORT = "vanillabackport";
     }
