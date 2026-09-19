@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.autumnity.farming.harvest.FoulBerryHarvestBehaviour;
 
 /**
  * Harvest adapters that only use registry ids and vanilla block-state properties.
@@ -41,6 +42,8 @@ public final class RegistryHarvestBehaviours {
     private static @Nullable CustomHarvestBehaviour create(Block block) {
         String id = BuiltInRegistries.BLOCK.getKey(block).toString();
         return switch (id) {
+            case "autumnity:foul_berry_bush", "autumnity:tall_foul_berry_bush" ->
+                    new FoulBerryHarvestBehaviour();
             case "windswept:wild_berry_bush" -> new ResetCrop(block, "wild_berries", 3, 2, 1, 2);
             case "festivedelight:cinnamon_bushripe" -> new ReplaceCrop(block, "cinnamon_sticks", "festivedelight:cinnamon_bush", 1, 1);
             case "hearthandharvest:blueberry_bush" -> new ResetCrop(block, "blueberry", 3, 1, 2, 3);

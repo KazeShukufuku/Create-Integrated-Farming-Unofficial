@@ -44,11 +44,17 @@ import plus.dragons.createintegratedfarming.common.registry.CIFRoostCapturables;
 import plus.dragons.createintegratedfarming.common.registry.CIFRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.hauntedharvest.farming.harvest.CornHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.WarpedWartHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.supplementaries.farming.harvest.FlaxHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.atmospheric.farming.harvest.AloeHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest.MintHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.registry.CrabbersDelightArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.delightoflight.registry.DelightOFlightHarvestBehaviors;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDBlockSpoutingBehaviours;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDHarvestBehaviours;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDArmInteractionPointTypes;
+import plus.dragons.createintegratedfarming.integration.mynethersdelight.farming.harvest.PowderyHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
 import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishing.NDUFishingNetCatchProvider;
 import plus.dragons.createintegratedfarming.integration.tide.TideIntegration;
@@ -115,19 +121,32 @@ public class CIFCommon {
     @SubscribeEvent
     public static void onCommonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CIFBlockSpoutingBehaviours::register);
+        if (ModIntegration.NETHER_EXPANSION.enabled())
+            event.enqueueWork(WarpedWartHarvestBehaviour::register);
+        if (ModIntegration.HAUNTED_HARVEST.enabled())
+            event.enqueueWork(CornHarvestBehaviour::register);
+        if (ModIntegration.SUPPLEMENTARIES.enabled())
+            event.enqueueWork(FlaxHarvestBehaviour::register);
+        if (ModIntegration.ATMOSPHERIC.enabled())
+            event.enqueueWork(AloeHarvestBehaviour::register);
+        if (ModIntegration.NEAPOLITAN.enabled())
+            event.enqueueWork(MintHarvestBehaviour::register);
         if (ModIntegration.FARMERS_DELIGHT.enabled())
             event.enqueueWork(FDBlockSpoutingBehaviours::register);
         if (ModIntegration.FARMERS_DELIGHT.enabled())
             event.enqueueWork(FDHarvestBehaviours::register);
         if (ModIntegration.MY_NETHERS_DELIGHT.enabled())
             event.enqueueWork(MNDBlockSpoutingBehaviors::register);
+        if (ModIntegration.MY_NETHERS_DELIGHT.enabled())
+            event.enqueueWork(PowderyHarvestBehaviour::register);
         if (ModIntegration.DELIGHT_O_FLIGHT.enabled())
             event.enqueueWork(DelightOFlightHarvestBehaviors::register);
         if (ModIntegration.TWILIGHT_DELIGHT.enabled())
             event.enqueueWork(TwilightDelightHarvestBehaviours::register);
         if (ModIntegration.CULTURAL_DELIGHTS.enabled())
             event.enqueueWork(CIFCommon::registerCulturalDelightsHarvests);
-        if (ModIntegration.HEARTH_AND_HARVEST.enabled()
+        if (ModIntegration.AUTUMNITY.enabled()
+                || ModIntegration.HEARTH_AND_HARVEST.enabled()
                 || ModIntegration.WINDSWEPT.enabled()
                 || ModIntegration.FESTIVE_DELIGHT.enabled()
                 || ModIntegration.NETHERS_EXOTICISM.enabled()
