@@ -51,7 +51,7 @@ Twilight Forest / Twilight's Flavors & Delight, Create Crafts & Additions, and
 Create Enchantable Machinery.
 
 Optional crop harvesting also supports Neapolitan 5.1.0 (mint), Atmospheric
-6.1.1 (aloe), Supplementaries 1.20-3.1.43 (flax), and Haunted Harvest
+6.1.1 (aloe), Supplementaries 1.20-3.1.42 or newer in the 1.20-3.x line (flax), and Haunted Harvest
 1.20-3.2.0 (corn), and Jaden's Nether Expansion 2.3.5 (warped wart).
 These work with mechanical and Vacuum Harvesters.
 Install Blueprint for Neapolitan/Atmospheric, and Moonlight Lib for
