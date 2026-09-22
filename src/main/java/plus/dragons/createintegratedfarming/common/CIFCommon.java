@@ -29,6 +29,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import plus.dragons.createdragonsplus.common.CDPRegistrate;
+import plus.dragons.createintegratedfarming.common.farming.harvest.GlowBerryHarvestBehaviour;
 import plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetEntityCaptures;
@@ -44,10 +45,14 @@ import plus.dragons.createintegratedfarming.common.registry.CIFRoostCapturables;
 import plus.dragons.createintegratedfarming.common.registry.CIFRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.endersdelight.farming.harvest.EndersHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.hauntedharvest.farming.harvest.CornHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.CerebrageHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.SorrowsquashHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.WarpedWartHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.supplementaries.farming.harvest.FlaxHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.atmospheric.farming.harvest.AloeHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.atmospheric.farming.harvest.AtmosphericFruitHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest.MintHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.registry.CrabbersDelightArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.delightoflight.registry.DelightOFlightHarvestBehaviors;
@@ -58,6 +63,7 @@ import plus.dragons.createintegratedfarming.integration.mynethersdelight.farming
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
 import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishing.NDUFishingNetCatchProvider;
 import plus.dragons.createintegratedfarming.integration.tide.TideIntegration;
+import plus.dragons.createintegratedfarming.integration.upgradeaquatic.farming.harvest.MulberryHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.VanillaBackportIntegration;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostCapturables;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostingDisplayProfiles;
@@ -120,15 +126,25 @@ public class CIFCommon {
 
     @SubscribeEvent
     public static void onCommonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(GlowBerryHarvestBehaviour::register);
         event.enqueueWork(CIFBlockSpoutingBehaviours::register);
-        if (ModIntegration.NETHER_EXPANSION.enabled())
+        if (ModIntegration.NETHER_EXPANSION.enabled()) {
             event.enqueueWork(WarpedWartHarvestBehaviour::register);
+            event.enqueueWork(CerebrageHarvestBehaviour::register);
+            event.enqueueWork(SorrowsquashHarvestBehaviour::register);
+        }
         if (ModIntegration.HAUNTED_HARVEST.enabled())
             event.enqueueWork(CornHarvestBehaviour::register);
+        if (ModIntegration.ENDERS_DELIGHT.enabled())
+            event.enqueueWork(EndersHarvestBehaviour::register);
+        if (ModIntegration.UPGRADE_AQUATIC.enabled())
+            event.enqueueWork(MulberryHarvestBehaviour::register);
         if (ModIntegration.SUPPLEMENTARIES.enabled())
             event.enqueueWork(FlaxHarvestBehaviour::register);
-        if (ModIntegration.ATMOSPHERIC.enabled())
+        if (ModIntegration.ATMOSPHERIC.enabled()) {
             event.enqueueWork(AloeHarvestBehaviour::register);
+            event.enqueueWork(AtmosphericFruitHarvestBehaviour::register);
+        }
         if (ModIntegration.NEAPOLITAN.enabled())
             event.enqueueWork(MintHarvestBehaviour::register);
         if (ModIntegration.FARMERS_DELIGHT.enabled())
