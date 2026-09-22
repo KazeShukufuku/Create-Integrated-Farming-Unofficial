@@ -19,6 +19,7 @@
 package plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest;
 
 import com.teamabnormals.neapolitan.common.block.MintBlock;
+import com.teamabnormals.neapolitan.core.registry.NeapolitanBlocks;
 import com.teamabnormals.neapolitan.core.registry.NeapolitanItems;
 import java.util.List;
 import net.minecraft.core.BlockPos;
@@ -33,6 +34,11 @@ import plus.dragons.createintegratedfarming.common.farming.harvest.HarvestOperat
 
 public class MintHarvestBehaviour extends AreaCompatibleHarvestBehaviour {
     public static void register() {
+        var vanilla = new VanillaHarvestBehaviour();
+        CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.VANILLA_VINE.get(), vanilla);
+        CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.VANILLA_VINE_PLANT.get(), vanilla);
+        CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.BANANA_BUNDLE.get(), new BananaHarvestBehaviour());
+        CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.ADZUKI_SPROUTS.get(), new AdzukiHarvestBehaviour());
         CustomHarvestBehaviour.REGISTRY.registerProvider(block -> block instanceof MintBlock
                 ? new MintHarvestBehaviour() : null);
     }

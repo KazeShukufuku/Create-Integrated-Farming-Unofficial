@@ -171,6 +171,8 @@ dependencies {
     compatMod "maven.modrinth:haunted-harvest:${haunted_harvest_version}"
     compatMod "maven.modrinth:moonlight:${moonlight_version}"
     compatMod "maven.modrinth:jadens-nether-expansion:${nether_expansion_version}"
+    compatMod "maven.modrinth:upgrade-aquatic:${upgrade_aquatic_version}"
+    compatMod "maven.modrinth:enders-delight:${enders_delight_version}"
     runtimeMod "maven.modrinth:elysium-api:${elysium_api_version}"
 
     // Optional integrations added for the 1.20.1 port. Keep them on the

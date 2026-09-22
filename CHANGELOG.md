@@ -1,3 +1,34 @@
+## Create: Integrated Farming 1.4.3-1.20.1
+
+Ported applicable changes from upstream commits `56ab765`–`1f63780` (release 1.4.3) to Minecraft 1.20.1 Forge.
+
+### Feature
+
+* Combined crop farming, animal husbandry, and fishing Ponder tutorials under Farming Appliances.
+* Occupied Roost variants are grouped in the farming and Mechanical Arm target categories via Create: Dragons Plus 1.11.9's Ponder tag groups. Scroll through a group to select an animal and open its tutorial. All duck and goose Roost variants now have tutorials.
+
+### Fix
+
+* Added Glow Berry harvesting that leaves the cave vines intact.
+
+### Compatibility
+
+* Expanded Vacuum Harvester and Mechanical Harvester support for Atmospheric oranges, blood oranges, passion fruit, dragon fruit, yucca fruit bundles, and hanging currants.
+* Added harvesting for Neapolitan banana bundles, vanilla vines, and adzuki sprouts. Replanting vanilla retains its growing end and support.
+* Added Jaden's Nether Expansion Cerebrage and Sorrowsquash harvesting, matching the 1.20.1 pick-up drops.
+* Added Upgrade Aquatic 6.x mulberry harvesting, preserving single and double vines.
+* Added Ender's Delight 1.1.x Amberveil, Chorus Flame, Ethereal Saffron, and Voidpepper harvesting. Picked fruit can grow again; Voidpepper retains its spreading origin.
+* Disable harvester replanting to collect Ender's Delight Amberveil and Ethereal Saffron as whole plants; otherwise their drops are used to replant them.
+
+### Skipped
+
+* Cultural Delights 0.18.1+ corn, beans, and mint harvesting: no 0.18.1+ build exists for 1.20.1.
+* Cook's Collection 0.5.8+ lemons: the lemon tree is bundled with Cultural Delights 0.18.1 support upstream and its 1.20.1 build differs.
+
+### Requirements
+
+* Requires Create: Dragons Plus 1.11.9 or newer.
+
 ## Create: Integrated Farming 1.4.2-1.20.1
 
 Ported applicable fixes from upstream commit `0ff12d2` to Minecraft 1.20.1 Forge.

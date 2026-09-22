@@ -37,6 +37,7 @@ import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponde
 import plus.dragons.createintegratedfarming.integration.ranching.DynamicBirdRoostPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.twilightdelight.ponder.TwilightDelightPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.untitledduck.ponder.UntitledDuckPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportBlocks;
 import plus.dragons.createintegratedfarming.integration.tide.TideFishingNetPonderExample;
 
 @Mod.EventBusSubscriber(modid = CIFCommon.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -70,6 +71,9 @@ public class CIFClient {
             DynamicBirdRoostPonderPlugin.registerEnvironmental();
         if (ModIntegration.AUTUMNITY.enabled())
             DynamicBirdRoostPonderPlugin.registerAutumnity();
+        if (ModIntegration.VANILLA_BACKPORT.enabled())
+            CIFPonderPlugin.registerRoosts(VanillaBackportBlocks.CHICKEN_ROOST_WARM.getId(),
+                    VanillaBackportBlocks.CHICKEN_ROOST_COLD.getId());
     }
 
     private static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {

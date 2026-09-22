@@ -44,6 +44,8 @@ public enum ModIntegration {
     ENVIRONMENTAL(Mods.ENVIRONMENTAL),
     AUTUMNITY(Mods.AUTUMNITY),
     NETHER_EXPANSION(Mods.NETHER_EXPANSION),
+    ENDERS_DELIGHT(Mods.ENDERS_DELIGHT),
+    UPGRADE_AQUATIC(Mods.UPGRADE_AQUATIC),
     HAUNTED_HARVEST(Mods.HAUNTED_HARVEST),
     SUPPLEMENTARIES(Mods.SUPPLEMENTARIES),
     ATMOSPHERIC(Mods.ATMOSPHERIC),
@@ -98,6 +100,8 @@ public enum ModIntegration {
         public static final String ENVIRONMENTAL = "environmental";
         public static final String AUTUMNITY = "autumnity";
         public static final String NETHER_EXPANSION = "netherexp";
+        public static final String ENDERS_DELIGHT = "endersdelight";
+        public static final String UPGRADE_AQUATIC = "upgrade_aquatic";
         public static final String HAUNTED_HARVEST = "hauntedharvest";
         public static final String SUPPLEMENTARIES = "supplementaries";
         public static final String ATMOSPHERIC = "atmospheric";

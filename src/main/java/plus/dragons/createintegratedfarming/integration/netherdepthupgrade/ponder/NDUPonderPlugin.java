@@ -35,12 +35,12 @@ public class NDUPonderPlugin {
     private static void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         helper.forComponents(NDUBlocks.LAVA_FISHING_NET.getId())
                 .addStoryBoard("netherdepthsupgrade/lava_fishing_net", NDUPonderScenes::lavaFishing,
-                        CIFPonderTags.FISHING_APPLIANCES, AllCreatePonderTags.CONTRAPTION_ACTOR);
+                        CIFPonderTags.FARMING_APPLIANCES, AllCreatePonderTags.CONTRAPTION_ACTOR);
     }
 
     private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
         helper.addToTag(AllCreatePonderTags.ARM_TARGETS).add(NDUBlocks.LAVA_FISHING_NET.getId());
         helper.addToTag(AllCreatePonderTags.CONTRAPTION_ACTOR).add(NDUBlocks.LAVA_FISHING_NET.getId());
-        helper.addToTag(CIFPonderTags.FISHING_APPLIANCES).add(NDUBlocks.LAVA_FISHING_NET.getId());
+        helper.addToTag(CIFPonderTags.FARMING_APPLIANCES).add(NDUBlocks.LAVA_FISHING_NET.getId());
     }
 }
