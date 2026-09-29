@@ -51,7 +51,10 @@ public enum ModIntegration {
     ATMOSPHERIC(Mods.ATMOSPHERIC),
     NEAPOLITAN(Mods.NEAPOLITAN),
     TIDE(Mods.TIDE),
-    VANILLA_BACKPORT(Mods.VANILLA_BACKPORT);
+    VANILLA_BACKPORT(Mods.VANILLA_BACKPORT),
+    VINTAGE_DELIGHT(Mods.VINTAGE_DELIGHT),
+    YOUKAIS_HOMECOMING(Mods.YOUKAIS_HOMECOMING),
+    QUARK(Mods.QUARK);
 
     private final String id;
 
@@ -108,5 +111,8 @@ public enum ModIntegration {
         public static final String NEAPOLITAN = "neapolitan";
         public static final String TIDE = "tide";
         public static final String VANILLA_BACKPORT = "vanillabackport";
+        public static final String VINTAGE_DELIGHT = "vintagedelight";
+        public static final String YOUKAIS_HOMECOMING = "youkaishomecoming";
+        public static final String QUARK = "quark";
     }
 }
