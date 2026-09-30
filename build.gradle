@@ -17,7 +17,8 @@ def cifMixinConfigs = [
         'create_integrated_farming.delightoflight.mixins.json',
         'create_integrated_farming.netherdepthsupgrade.mixins.json',
         'create_integrated_farming.tide.mixins.json',
-        'create_integrated_farming.netherexp.mixins.json'
+        'create_integrated_farming.netherexp.mixins.json',
+        'create_integrated_farming.createcybergoggles.mixins.json'
 ]
 
 java {
@@ -161,6 +162,7 @@ dependencies {
     compatMod curse('cultural-delights', '574622', '8126187')
     compatMod curse('tide', '884685', '8571673')
     compatMod curse('vanilla-backport', '417430', '8229712')
+    compatMod curse('create-cyber-goggles', '1233804', '8622914')
     runtimeMod curse('cloth-config', '348521', '5729105')
     runtimeMod curse('platform', '997634', '8214829')
 

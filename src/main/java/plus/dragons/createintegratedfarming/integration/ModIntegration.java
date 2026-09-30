@@ -54,7 +54,8 @@ public enum ModIntegration {
     VANILLA_BACKPORT(Mods.VANILLA_BACKPORT),
     VINTAGE_DELIGHT(Mods.VINTAGE_DELIGHT),
     YOUKAIS_HOMECOMING(Mods.YOUKAIS_HOMECOMING),
-    QUARK(Mods.QUARK);
+    QUARK(Mods.QUARK),
+    CREATE_CYBER_GOGGLES(Mods.CREATE_CYBER_GOGGLES);
 
     private final String id;
 
@@ -114,5 +115,6 @@ public enum ModIntegration {
         public static final String VINTAGE_DELIGHT = "vintagedelight";
         public static final String YOUKAIS_HOMECOMING = "youkaishomecoming";
         public static final String QUARK = "quark";
+        public static final String CREATE_CYBER_GOGGLES = "create_cyber_goggles";
     }
 }
