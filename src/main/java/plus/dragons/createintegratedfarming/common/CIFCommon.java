@@ -166,7 +166,9 @@ public class CIFCommon {
                 || ModIntegration.WINDSWEPT.enabled()
                 || ModIntegration.FESTIVE_DELIGHT.enabled()
                 || ModIntegration.NETHERS_EXOTICISM.enabled()
-                || ModIntegration.CORN_DELIGHT.enabled())
+                || ModIntegration.CORN_DELIGHT.enabled()
+                || ModIntegration.VINTAGE_DELIGHT.enabled()
+                || ModIntegration.YOUKAIS_HOMECOMING.enabled())
             event.enqueueWork(plus.dragons.createintegratedfarming.integration.RegistryHarvestBehaviours::register);
         event.enqueueWork(CIFRoostCapturables::register);
         event.enqueueWork(CIFRoostingDisplayProfiles::register);

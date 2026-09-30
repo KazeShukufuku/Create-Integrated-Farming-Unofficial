@@ -187,6 +187,10 @@ dependencies {
     runtimeMod curse('windsweptmod', '636321', '7515974')
     runtimeMod curse('festive-delight', '711672', '7884694')
     runtimeMod curse('nethers-exoticism', '486029', '5825956')
+    runtimeMod curse('youkais-homecoming', '957437', '8004757')
+    runtimeMod "maven.modrinth:vintage-delight:q8Ght7Bo"
+    runtimeMod "maven.modrinth:quark:DijQLauD"
+    runtimeMod "maven.modrinth:zeta:mSER3jBI"
     implementation fg.deobf(curse('create-dragons-plus', '1216624', create_dragons_plus_file_id))
     compileOnly fg.deobf(curse('jade', '324717', '6855440'))
     runtimeMod curse('jade', '324717', '6855440')

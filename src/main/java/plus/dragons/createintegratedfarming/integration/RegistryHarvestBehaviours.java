@@ -7,11 +7,13 @@ package plus.dragons.createintegratedfarming.integration;
 
 import com.simibubi.create.content.contraptions.actors.harvester.HarvesterMovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.HarvestOperations;
 import plus.dragons.createintegratedfarming.integration.autumnity.farming.harvest.FoulBerryHarvestBehaviour;
 
 /**
@@ -58,6 +61,15 @@ public final class RegistryHarvestBehaviours {
             case "nethersexoticism:kiwano_leaves_stage_1" -> new BrokenFruit(block, false);
             case "nethersexoticism:bouddha_s_hand_block", "nethersexoticism:ramboutan_block" -> new BrokenFruit(block, true);
             case "nethersexoticism:pitaya_block", "nethersexoticism:pitaya_block_open" -> new Pitaya(block);
+            // Mature cucumber drops contain no seeds, so the standard replanting
+            // fallback would remove the whole plant. Pick it in place instead,
+            // preferring whatever state the environment's right-click harvest
+            // would replant (Quark's Simple Harvest table when it manages the
+            // crop, else the mod's own reset age).
+            case "vintagedelight:cucumber_crop" -> new LootResetCrop(block, 7,
+                    state -> quarkReplant(state, set(state, "age", 5)));
+            case "youkaishomecoming:cucumber" -> new LootResetCrop(block, 7,
+                    state -> quarkReplant(state, set(state, "age", baseAge(block, 4))));
             default -> null;
         };
     }
@@ -69,6 +81,44 @@ public final class RegistryHarvestBehaviours {
     private static @Nullable Integer number(BlockState state, String name) {
         Property<?> property = property(state, name);
         return property != null && state.getValue(property) instanceof Integer value ? value : null;
+    }
+
+    /** Resolve Youkai's Homecoming climbing crops' {@code getBaseAge()} without a binary dependency. */
+    private static int baseAge(Block block, int fallback) {
+        for (var method : block.getClass().getMethods()) {
+            if (!method.getName().equals("getBaseAge") || method.getParameterCount() != 0)
+                continue;
+            try {
+                Object result = method.invoke(block);
+                if (result instanceof Integer value)
+                    return value;
+            } catch (ReflectiveOperationException ignored) {}
+            break;
+        }
+        return fallback;
+    }
+
+    /**
+     * Quark's Simple Harvest module keeps a public lookup table from mature
+     * crop states to the state it replants after a right-click harvest. When
+     * that table manages this state, reuse its replant so machines match the
+     * player experience; otherwise keep the mod's own reset state.
+     */
+    @SuppressWarnings("unchecked")
+    private static BlockState quarkReplant(BlockState mature, BlockState fallback) {
+        try {
+            Class<?> module = Class.forName("org.violetmoon.quark.content.tweaks.module.SimpleHarvestModule");
+            if (!module.getField("staticEnabled").getBoolean(null))
+                return fallback;
+            var blacklist = module.getField("simpleHarvestBlacklistedTag").get(null);
+            if (blacklist instanceof net.minecraft.tags.TagKey<?> tag
+                    && ((BlockState) mature).is((net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block>) tag))
+                return fallback;
+            Object replanted = ((java.util.Map<BlockState, BlockState>) module.getField("crops").get(null)).get(mature);
+            return replanted instanceof BlockState state && state.is(mature.getBlock()) ? state : fallback;
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError ignored) {
+            return fallback;
+        }
     }
 
     private static boolean flag(BlockState state, String name) {
@@ -320,6 +370,54 @@ public final class RegistryHarvestBehaviours {
                     ? motion.x > 0 ? Direction.EAST : Direction.WEST
                     : motion.z > 0 ? Direction.SOUTH : Direction.NORTH;
             return movement.getOpposite();
+        }
+    }
+
+    /**
+     * Area harvest for crops whose mature loot contains no seed to replant with.
+     * Collects the block's loot table drops, then replants in place without
+     * breaking the block, keeping the rest of the plant's state untouched.
+     */
+    private static final class LootResetCrop implements CustomHarvestBehaviour {
+        private final Block block;
+        private final int matureAge;
+        private final java.util.function.Function<BlockState, BlockState> replant;
+
+        private LootResetCrop(Block block, int matureAge, java.util.function.Function<BlockState, BlockState> replant) {
+            this.block = block;
+            this.matureAge = matureAge;
+            this.replant = replant;
+        }
+
+        @Override
+        public boolean handlesMechanicalHarvester() {
+            return false;
+        }
+
+        @Override
+        public void harvest(HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {
+            // Area-only behaviour; the mechanical harvester keeps Create's default logic.
+        }
+
+        @Override
+        public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+            if (!(context.level() instanceof ServerLevel level)
+                    || !HarvestOperations.canHarvest(context, List.of(pos))
+                    || !context.claimHarvest(pos))
+                return false;
+            state = level.getBlockState(pos);
+            Integer age = number(state, "age");
+            BlockState replanted = replant.apply(state);
+            if (!state.is(block) || age == null || age < matureAge
+                    || !replanted.is(block) || !replanted.canSurvive(level, pos))
+                return false;
+            if (HarvestOperations.dropsEnabled(context))
+                Block.getDrops(state, level, pos, level.getBlockEntity(pos), null, context.tool())
+                        .forEach(context::collect);
+            level.setBlock(pos, replanted, Block.UPDATE_CLIENTS);
+            level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS,
+                    1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            return true;
         }
     }
 
