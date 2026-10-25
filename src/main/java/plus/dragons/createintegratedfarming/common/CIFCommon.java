@@ -45,6 +45,8 @@ import plus.dragons.createintegratedfarming.common.registry.CIFRoostCapturables;
 import plus.dragons.createintegratedfarming.common.registry.CIFRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.fruitsdelight.farming.harvest.FruitsDelightHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.northeastchinadelight.farming.harvest.NortheastChinaHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.endersdelight.farming.harvest.EndersHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.hauntedharvest.farming.harvest.CornHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.CerebrageHarvestBehaviour;
@@ -127,6 +129,10 @@ public class CIFCommon {
     @SubscribeEvent
     public static void onCommonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(GlowBerryHarvestBehaviour::register);
+        if (ModIntegration.FRUITS_DELIGHT.enabled())
+            event.enqueueWork(FruitsDelightHarvestBehaviour::register);
+        if (ModIntegration.NORTHEAST_CHINA_DELIGHT.enabled())
+            event.enqueueWork(NortheastChinaHarvestBehaviour::register);
         event.enqueueWork(CIFBlockSpoutingBehaviours::register);
         if (ModIntegration.NETHER_EXPANSION.enabled()) {
             event.enqueueWork(WarpedWartHarvestBehaviour::register);

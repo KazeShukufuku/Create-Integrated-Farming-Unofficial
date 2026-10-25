@@ -58,6 +58,20 @@ Install Blueprint for Neapolitan/Atmospheric, and Moonlight Lib for
 Supplementaries/Haunted Harvest. Jaden's Nether Expansion requires Elysium API
 1.1.3 or newer. None of these mods is required by this port.
 
+Fruits Delight 1.1.3 fruit trees, single and double berry bushes, durians,
+and pineapples also support mechanical and Vacuum Harvesters. Fruit picking
+uses the mod's L2 Harvester API to preserve growing plants and synchronize
+both halves of tall bushes. Pineapple replanting consumes a pineapple sapling
+from the harvester's inventory when replanting is enabled.
+
+Northeast China Delight 3.2.0 support includes wood ear crops, hazelnut bushes,
+and corn. Wood ears retain their attachment direction and regrow from age 1;
+corn picking resets both the crop and its stalk without duplicate drops.
+These integrations are optional.
+
+Both mods and Fruits Delight's mapped L2 libraries are included in the
+development runtime. Use the normal `runClient` task to test them in game.
+
 ## 1.20.1 Port Notes
 
 Not every upstream 1.21.1 feature is duplicated in this port.
