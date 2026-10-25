@@ -1,3 +1,13 @@
+## Unreleased
+
+* Added mechanical and Vacuum Harvester support for Collector's Reap fruit
+  bushes, dragon fruit vines and sniffer flowers. Picking preserves both bush
+  halves and vine ropes; mature flowers require inventory seeds to replant.
+* Fixed Northstar Redux Mars tulip, palm, sprout and strawberry replanting by
+  consuming their actual planting items instead of their block items.
+* Added Collector's Reap 1.5.5 and Northstar Redux 0.6.6 (Create 6) to the
+  development runtime; both remain optional for players.
+
 ## Create: Integrated Farming 1.4.3.3-1.20.1
 
 * Added mechanical and Vacuum Harvester support for Fruits Delight fruit trees,

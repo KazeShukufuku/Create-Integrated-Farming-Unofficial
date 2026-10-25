@@ -45,6 +45,8 @@ import plus.dragons.createintegratedfarming.common.registry.CIFRoostCapturables;
 import plus.dragons.createintegratedfarming.common.registry.CIFRoostingDisplayProfiles;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.collectorsreap.farming.harvest.CollectorsReapHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.northstar.farming.harvest.NorthstarHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.fruitsdelight.farming.harvest.FruitsDelightHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.northeastchinadelight.farming.harvest.NortheastChinaHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.endersdelight.farming.harvest.EndersHarvestBehaviour;
@@ -129,6 +131,10 @@ public class CIFCommon {
     @SubscribeEvent
     public static void onCommonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(GlowBerryHarvestBehaviour::register);
+        if (ModIntegration.COLLECTORS_REAP.enabled())
+            event.enqueueWork(CollectorsReapHarvestBehaviour::register);
+        if (ModIntegration.NORTHSTAR.enabled())
+            event.enqueueWork(NorthstarHarvestBehaviour::register);
         if (ModIntegration.FRUITS_DELIGHT.enabled())
             event.enqueueWork(FruitsDelightHarvestBehaviour::register);
         if (ModIntegration.NORTHEAST_CHINA_DELIGHT.enabled())

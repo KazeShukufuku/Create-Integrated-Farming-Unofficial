@@ -138,6 +138,13 @@ ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
+modId="collectorsreap"
+mandatory=false
+versionRange="[1.5.5,2)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
 modId="create_cyber_goggles"
 mandatory=false
 versionRange="[6,)"

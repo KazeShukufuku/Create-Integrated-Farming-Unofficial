@@ -32,3 +32,8 @@ desktop.ini
 .codegraph/
 *.tmp
 *.temp
+
+tests/
+src/test/
+src/gameTest/
+src/cropTest/

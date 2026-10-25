@@ -196,6 +196,8 @@ dependencies {
     runtimeMod curse('corn-delight', '577805', '8219677')
     runtimeMod curse('create-central-kitchen', '820977', '8204836')
     compatMod curse('blueprint', '382216', '8048579')
+    compatMod curse('collectors-reap', '807101', '7457274')
+    runtimeMod curse('northstar-redux', '1318310', '8954729')
     runtimeMod curse('environmental', '388992', '7065177')
     runtimeMod curse('autumnity', '365045', '6151402')
     runtimeMod curse('hearth-and-harvest', '1212197', '8416048')

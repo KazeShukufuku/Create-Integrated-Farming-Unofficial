@@ -72,6 +72,26 @@ These integrations are optional.
 Both mods and Fruits Delight's mapped L2 libraries are included in the
 development runtime. Use the normal `runClient` task to test them in game.
 
+Collector's Reap 1.5.5 and Northstar Redux 0.6.6 (Create 6 build) are also
+included in the development runtime and remain optional for players.
+Mechanical and Vacuum Harvesters support:
+
+* Collector's Reap lime and pomegranate bushes, preserving both halves when
+  picking fruit, including the mod's special pomegranate rules.
+* Dragon fruit vines, preserving their ropes and neighbouring segments when
+  picking. Budding dragon fruit is left to grow unless partial harvesting is enabled.
+* Bulbous rose and heartpetals crops, and mature damselflower, moontear and
+  skull lily flowers. Mature flowers drop no seeds; replanting requires the
+  corresponding seeds in the harvester inventory. Portobello colonies keep
+  using the existing Farmer's Delight integration.
+* Northstar Mars tulips, palms, sprouts and Martian strawberries. Replanting
+  consumes the actual planting item from drops first, then from inventory,
+  and resets the crop to age 0. Flower/block items are not used as seeds.
+
+These adapters respect replanting and partial-harvesting settings. Northstar's
+decorative tall sprouts, fungi and Venus vines are not treated as seed crops.
+The Collector's Reap integration requires version 1.5.5 or newer in the 1.x line.
+
 ## 1.20.1 Port Notes
 
 Not every upstream 1.21.1 feature is duplicated in this port.
