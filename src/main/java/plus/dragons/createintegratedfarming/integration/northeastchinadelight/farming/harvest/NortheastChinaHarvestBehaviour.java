@@ -29,7 +29,9 @@ public final class NortheastChinaHarvestBehaviour extends AreaCompatibleHarvestB
             if (!id.getNamespace().equals(ModIntegration.NORTHEAST_CHINA_DELIGHT.id()))
                 return null;
             return switch (id.getPath()) {
-                case "wood_ear_crop", "hazelnut_bush", "corn_crop", "corn_stalk" -> behaviour;
+                // Register the single mushroom too, so Create cannot uproot the colony's starter plant.
+                case "wood_ear_crop", "hazelnut_bush", "corn_crop", "corn_stalk",
+                        "hazel_mushroom", "hazel_mushroom_colony" -> behaviour;
                 default -> null;
             };
         });
@@ -46,6 +48,8 @@ public final class NortheastChinaHarvestBehaviour extends AreaCompatibleHarvestB
         String path = id.getPath();
         if (path.equals("corn_crop") || path.equals("corn_stalk"))
             return harvestCorn(context, pos, path.equals("corn_stalk"));
+        if (path.equals("hazel_mushroom_colony"))
+            return harvestMushrooms(context, pos, state);
         if (!path.equals("wood_ear_crop") && !path.equals("hazelnut_bush"))
             return false;
         if (!(state.getBlock().getStateDefinition().getProperty("age") instanceof IntegerProperty age))
@@ -66,6 +70,16 @@ public final class NortheastChinaHarvestBehaviour extends AreaCompatibleHarvestB
             }
         }
         return HarvestOperations.pickFruit(context, pos, state.setValue(age, 1), drops.toArray(ItemStack[]::new));
+    }
+
+    private boolean harvestMushrooms(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        int growth = state.getValue(BlockStateProperties.AGE_3);
+        if (growth == 0 || growth < 3 && !context.harvestPartiallyGrown())
+            return false;
+        // Match the mod's knife harvest: collect only new growth and retain the colony at age zero.
+        return HarvestOperations.pickFruit(context, pos, state.setValue(BlockStateProperties.AGE_3, 0),
+                new ItemStack(BuiltInRegistries.ITEM.get(
+                        ModIntegration.NORTHEAST_CHINA_DELIGHT.asResource("hazel_mushroom")), growth));
     }
 
     private boolean harvestCorn(AreaHarvestContext context, BlockPos pos, boolean stalk) {
