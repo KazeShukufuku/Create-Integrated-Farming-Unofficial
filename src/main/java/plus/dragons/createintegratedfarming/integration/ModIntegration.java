@@ -58,6 +58,8 @@ public enum ModIntegration {
     NORTHEAST_CHINA_DELIGHT(Mods.NORTHEAST_CHINA_DELIGHT),
     COLLECTORS_REAP(Mods.COLLECTORS_REAP),
     NORTHSTAR(Mods.NORTHSTAR),
+    FARMERS_SPELL(Mods.FARMERS_SPELL),
+    VINERY(Mods.VINERY),
     QUARK(Mods.QUARK),
     CREATE_CYBER_GOGGLES(Mods.CREATE_CYBER_GOGGLES);
 
@@ -122,6 +124,8 @@ public enum ModIntegration {
         public static final String NORTHEAST_CHINA_DELIGHT = "northeast_china_delight";
         public static final String COLLECTORS_REAP = "collectorsreap";
         public static final String NORTHSTAR = "northstar";
+        public static final String FARMERS_SPELL = "farmers_spell";
+        public static final String VINERY = "vinery";
         public static final String QUARK = "quark";
         public static final String CREATE_CYBER_GOGGLES = "create_cyber_goggles";
     }

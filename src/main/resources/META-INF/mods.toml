@@ -145,6 +145,13 @@ ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
+modId="vinery"
+mandatory=false
+versionRange="[1.4.41,1.5)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
 modId="create_cyber_goggles"
 mandatory=false
 versionRange="[6,)"

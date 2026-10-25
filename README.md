@@ -92,6 +92,23 @@ These adapters respect replanting and partial-harvesting settings. Northstar's
 decorative tall sprouts, fungi and Venus vines are not treated as seed crops.
 The Collector's Reap integration requires version 1.5.5 or newer in the 1.x line.
 
+Farmer's Spell, [Let's Do] Vinery and NetherVinery are also supported by both
+mechanical and Vacuum Harvesters:
+
+* Amethyst beetroot replants with its own seeds and retains its wall, ceiling or
+  floor attachment. Replanting and partial harvesting follow the harvester settings.
+* Vinery and NetherVinery grape bushes, jungle grape vines, planted grapevine and
+  obsidian stems, and lattices yield their corresponding grapes. Apple leaves
+  yield ripe apples.
+* These perennial plants are picked in place, even with replanting disabled.
+  Supports, vine attachments and lattice block entities are preserved. Full maturity
+  is required by default; partial harvesting also permits the native early-picking
+  stage of grape bushes, vines and lattices. Empty supports are left untouched.
+
+The development runtime includes Farmer's Spell 1.0.5, Vinery 1.4.41 and
+NetherVinery 1.2.19. All remain optional; the Vinery integration requires 1.4.41
+or newer in the 1.4.x line.
+
 ## 1.20.1 Port Notes
 
 Not every upstream 1.21.1 feature is duplicated in this port.

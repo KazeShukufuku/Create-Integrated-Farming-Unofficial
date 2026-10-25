@@ -47,6 +47,8 @@ import plus.dragons.createintegratedfarming.config.CIFConfig;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.collectorsreap.farming.harvest.CollectorsReapHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.northstar.farming.harvest.NorthstarHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.farmersspell.farming.harvest.AmethystBeetrootHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.vinery.farming.harvest.VineryHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.fruitsdelight.farming.harvest.FruitsDelightHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.northeastchinadelight.farming.harvest.NortheastChinaHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.endersdelight.farming.harvest.EndersHarvestBehaviour;
@@ -135,6 +137,10 @@ public class CIFCommon {
             event.enqueueWork(CollectorsReapHarvestBehaviour::register);
         if (ModIntegration.NORTHSTAR.enabled())
             event.enqueueWork(NorthstarHarvestBehaviour::register);
+        if (ModIntegration.FARMERS_SPELL.enabled())
+            event.enqueueWork(AmethystBeetrootHarvestBehaviour::register);
+        if (ModIntegration.VINERY.enabled())
+            event.enqueueWork(VineryHarvestBehaviour::register);
         if (ModIntegration.FRUITS_DELIGHT.enabled())
             event.enqueueWork(FruitsDelightHarvestBehaviour::register);
         if (ModIntegration.NORTHEAST_CHINA_DELIGHT.enabled())
