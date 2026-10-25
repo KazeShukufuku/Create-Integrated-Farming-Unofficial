@@ -1,3 +1,22 @@
+## Unreleased
+
+* Added mechanical and Vacuum Harvester support for Farmer's Spell amethyst
+  beetroot, preserving its attachment direction and consuming its own seeds when
+  replanting.
+* Added Vinery and NetherVinery grape and apple picking. Harvesting preserves
+  perennial plants, grapevine supports and lattice block entity data, and updates
+  the lattice's displayed growth stage.
+* Added Farmer's Spell 1.0.5, Vinery 1.4.41 and NetherVinery 1.2.19 to the optional
+  development runtime.
+
+* Added mechanical and Vacuum Harvester support for Collector's Reap fruit
+  bushes, dragon fruit vines and sniffer flowers. Picking preserves both bush
+  halves and vine ropes; mature flowers require inventory seeds to replant.
+* Fixed Northstar Redux Mars tulip, palm, sprout and strawberry replanting by
+  consuming their actual planting items instead of their block items.
+* Added Collector's Reap 1.5.5 and Northstar Redux 0.6.6 (Create 6) to the
+  development runtime; both remain optional for players.
+
 ## Create: Integrated Farming 1.4.3.3-1.20.1
 
 * Added mechanical and Vacuum Harvester support for Fruits Delight fruit trees,
