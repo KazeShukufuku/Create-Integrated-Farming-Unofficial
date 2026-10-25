@@ -1,3 +1,13 @@
+## Create: Integrated Farming 1.4.3.3-1.20.1
+
+* Added mechanical and Vacuum Harvester support for Fruits Delight fruit trees,
+  berry bushes, durians, and pineapples, using its native harvesting API.
+  Double bushes regrow together; pineapple replanting consumes a pineapple sapling.
+* Added Northeast China Delight wood ear, hazelnut, and corn harvesting.
+  Picking preserves wood ear attachment and synchronizes both corn segments.
+* Included both mods and mapped Fruits Delight libraries in the development
+  runtime for testing with `runClient`.
+
 ## Create: Integrated Farming 1.4.3-1.20.1
 
 Ported applicable changes from upstream commits `56ab765`–`1f63780` (release 1.4.3) to Minecraft 1.20.1 Forge.

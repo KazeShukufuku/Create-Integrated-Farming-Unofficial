@@ -82,6 +82,19 @@ mixin {
 }
 
 repositories {
+    // Use the newer bundled libraries shared by Youkai's Homecoming and Fruits Delight.
+    // Pin the upstream snapshot and map each library for the development runtime.
+    ivy {
+        name = 'LightLandLibraries'
+        url = 'https://raw.githubusercontent.com/Minecraft-LightLand/Youkai-Homecoming/2bd7ee48bdad8ea277ab09b0879510ae657a06f9/libs'
+        patternLayout { artifact '[artifact]-[revision].[ext]' }
+        metadataSources { artifact() }
+        content {
+            includeGroup 'dev.xkmc.l2harvester'
+            includeGroup 'dev.xkmc.l2library'
+            includeGroup 'dev.xkmc.l2serial'
+        }
+    }
     mavenCentral()
     maven {
         url = 'https://api.modrinth.com/maven'
@@ -190,6 +203,11 @@ dependencies {
     runtimeMod curse('festive-delight', '711672', '7884694')
     runtimeMod curse('nethers-exoticism', '486029', '5825956')
     runtimeMod curse('youkais-homecoming', '957437', '8004757')
+    runtimeMod curse('fruits-delight', '943774', '8304691')
+    runtimeMod curse('northeast-china-delight', '1733076', '9310046')
+    runtimeMod 'dev.xkmc.l2harvester:l2harvester:0.1.2'
+    runtimeMod 'dev.xkmc.l2library:l2library:2.4.25-slim'
+    runtimeMod 'dev.xkmc.l2serial:l2serial:1.2.4'
     runtimeMod "maven.modrinth:vintage-delight:q8Ght7Bo"
     runtimeMod "maven.modrinth:quark:DijQLauD"
     runtimeMod "maven.modrinth:zeta:mSER3jBI"
